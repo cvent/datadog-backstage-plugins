@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -10,7 +11,7 @@ const useStyles = makeStyles({
     fill: '#7df3e1',
   },
 });
-const LogoFull = () => {
+function LogoFull() {
   const classes = useStyles();
 
   return (
@@ -25,6 +26,6 @@ const LogoFull = () => {
       />
     </svg>
   );
-};
+}
 
 export default LogoFull;

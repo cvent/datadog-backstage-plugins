@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "@cvent/datadog-backstage-plugins",
   "version": "1.0.0",
   "private": true,
   "engines": {
@@ -21,7 +21,11 @@
     "fix": "backstage-cli repo fix",
     "lint": "backstage-cli repo lint --since origin/main",
     "lint:all": "backstage-cli repo lint",
+    "config:check": "backstage-cli config:check --strict",
     "prettier:check": "prettier --check .",
+    "deprecations": "backstage-cli repo list-deprecations",
+    "spellcheck": "cspell --gitignore '**/*.{tsx,ts,yaml,md}'",
+    "verify": "yarn clean && yarn spellcheck --no-progress && yarn lint:all && yarn config:check && yarn tsc && yarn deprecations && yarn test:all && yarn knip && yarn clean && echo '💙 - verified - 💙'",
     "new": "backstage-cli new"
   },
   "workspaces": {
@@ -31,14 +35,21 @@
     ]
   },
   "devDependencies": {
-    "@backstage/cli": "^0.31.0",
+    "@backstage/cli": "^0.31.1",
     "@backstage/e2e-test-utils": "^0.1.1",
-    "@playwright/test": "^1.32.3",
-    "node-gyp": "^10.0.0",
-    "prettier": "^2.3.2",
-    "typescript": "~5.8.0"
+    "@playwright/test": "^1.51.1",
+    "cspell": "^8.18.1",
+    "eslint-plugin-prettier": "^5.2.6",
+    "jest-canvas-mock": "^2.5.2",
+    "knip": "^5.50.2",
+    "node-gyp": "^10.3.1",
+    "prettier": "^3.5.3",
+    "typescript": "~5.8.3"
   },
   "resolutions": {
+    "jsonpath-plus": ">=10",
+    "koa": ">=2",
+    "tough-cookie": ">=4",
     "@types/react": "^18",
     "@types/react-dom": "^18"
   },
@@ -52,5 +63,10 @@
       "prettier --write"
     ]
   },
-  "packageManager": "yarn@4.4.1"
+  "jest": {
+    "setupFiles": [
+      "jest-canvas-mock"
+    ]
+  },
+  "packageManager": "yarn@4.9.1"
 }
