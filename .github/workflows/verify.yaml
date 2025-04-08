@@ -1,0 +1,22 @@
+name: CI - Verify Plugins
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - name: Use Node.js 22.x with yarn cache
+      uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e
+      with:
+        node-version: 22.x
+        cache: yarn
+    - name: Install Dependencies
+      run: yarn install
+    - name: Verify Plugins
+      run: yarn verify
