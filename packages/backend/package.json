@@ -43,7 +43,7 @@
     "app": "link:../app",
     "better-sqlite3": "^9.0.0",
     "node-gyp": "^10.0.0",
-    "pg": "^8.11.3"
+    "pg": "^8.14.1"
   },
   "devDependencies": {
     "@backstage/cli": "^0.31.0"
