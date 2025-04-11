@@ -8,6 +8,8 @@
 
 import { createBackend } from '@backstage/backend-defaults';
 
+import { datadogServiceFromComponentAndGroupSync } from './extensions/datadogServiceFromComponentAndGroupSync';
+
 const backend = createBackend();
 
 backend.add(import('@backstage/plugin-app-backend'));
@@ -21,6 +23,9 @@ backend.add(import('@backstage/plugin-auth-backend'));
 // See https://backstage.io/docs/backend-system/building-backends/migrating#the-auth-plugin
 backend.add(import('@backstage/plugin-auth-backend-module-guest-provider'));
 // See https://backstage.io/docs/auth/guest/provider
+
+// events plugin
+backend.add(import('@backstage/plugin-events-backend'));
 
 // catalog plugin
 backend.add(import('@backstage/plugin-catalog-backend'));
@@ -48,5 +53,9 @@ backend.add(import('@backstage/plugin-search-backend-module-pg'));
 // search collators
 backend.add(import('@backstage/plugin-search-backend-module-catalog'));
 backend.add(import('@backstage/plugin-search-backend-module-techdocs'));
+
+// datadog plugins
+backend.add(import('@cvent/backstage-plugin-datadog-entity-sync-backend'));
+backend.add(datadogServiceFromComponentAndGroupSync);
 
 backend.start();
