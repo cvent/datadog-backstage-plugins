@@ -1,0 +1,18 @@
+version: 0.2,
+language: en,
+words:
+  - autofocus
+  - cicd
+  - scaffolder
+  - subcomponents
+  - techdocs
+  - runbook
+
+flagWords: []
+ignoreWords:
+  - cvent
+  - exampler
+  - pgsslmode
+  - sslmode
+  - datadoghq
+  - luxon

@@ -1,0 +1,20 @@
+{
+  "ignore": ["**/.eslintrc.js", "examples/**"],
+  "ignoreDependencies": [
+    "app",
+    "better-sqlite3",
+    "eslint-plugin-prettier",
+    "jest-canvas-mock",
+    "node-gyp"
+  ],
+  "workspaces": {
+    "packages/*": {
+      "entry": "src/{index,setupTests}.{ts,tsx}",
+      "project": "**/*.{ts,tsx}"
+    },
+    "plugins/*": {
+      "entry": ["{src,dev}/{index,setupTests}.{ts,tsx}"],
+      "project": "**/*.{ts,tsx}"
+    }
+  }
+}
