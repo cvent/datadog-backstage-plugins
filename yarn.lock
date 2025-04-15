@@ -5877,7 +5877,7 @@ __metadata:
     cspell: "npm:^8.18.1"
     eslint-plugin-prettier: "npm:^5.2.6"
     jest-canvas-mock: "npm:^2.5.2"
-    knip: "npm:^5.50.2"
+    knip: "npm:^5.50.4"
     node-gyp: "npm:^10.3.1"
     prettier: "npm:^3.5.3"
     typescript: "npm:~5.8.3"
@@ -23106,9 +23106,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:^5.50.2":
-  version: 5.50.2
-  resolution: "knip@npm:5.50.2"
+"knip@npm:^5.50.4":
+  version: 5.50.4
+  resolution: "knip@npm:5.50.4"
   dependencies:
     "@nodelib/fs.walk": "npm:^1.2.3"
     easy-table: "npm:1.2.0"
@@ -23130,7 +23130,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10c0/f588c0b1b4e406d383ecfe394f77e03eca340a23c7489987ca781cd7b4f382053f8f86bfbfd0adebf73f38beefc684dc8b3288b54c36c72b0df5003cdea76b68
+  checksum: 10c0/ea16cef934f656e6aacf0eb99d91ba52c601f057ba70de1040b6dc716cb890ac821c63989c5588617576f7c35d0dccdc343e6b1924ee5a1e8822f46c514c02b4
   languageName: node
   linkType: hard
 

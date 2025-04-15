@@ -41,7 +41,7 @@
     "cspell": "^8.18.1",
     "eslint-plugin-prettier": "^5.2.6",
     "jest-canvas-mock": "^2.5.2",
-    "knip": "^5.50.2",
+    "knip": "^5.50.4",
     "node-gyp": "^10.3.1",
     "prettier": "^3.5.3",
     "typescript": "~5.8.3"
