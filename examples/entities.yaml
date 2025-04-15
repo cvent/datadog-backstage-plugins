@@ -39,3 +39,40 @@ spec:
     message ExampleMessage {
       string example = 1;
     };
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: datadog-example-apm-service
+  title: Datadog Apm Service
+  annotations:
+    datadoghq.com/service-name: datadog-example-apm-service
+spec:
+  type: service
+  lifecycle: experimental
+  owner: example-team
+  system: datadog-example
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: datadog-example-rum-application
+  title: Datadog Rum Application
+  annotations:
+    datadoghq.com/application-id: datadog-example-application
+spec:
+  type: website
+  lifecycle: experimental
+  owner: example-team
+  system: datadog-example
+
+---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-system
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: datadog-example
+spec:
+  owner: guests

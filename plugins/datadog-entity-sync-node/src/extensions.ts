@@ -1,0 +1,36 @@
+import type { SchedulerServiceTaskScheduleDefinition } from '@backstage/backend-plugin-api';
+import { createExtensionPoint } from '@backstage/backend-plugin-api';
+import type { EntityFilterQuery } from '@backstage/catalog-client/index';
+import type { HumanDuration } from '@backstage/types/index';
+
+import type { DatadogServiceFromEntitySyncOptions } from './services/DatadogServiceFromEntitySync';
+
+interface RateLimit {
+  count: number;
+  interval: HumanDuration;
+}
+
+export interface SyncConfig {
+  schedule: SchedulerServiceTaskScheduleDefinition;
+  entityFilter?: EntityFilterQuery;
+  rateLimit?: RateLimit;
+  enabled?: boolean;
+}
+
+export type AllSyncConfigs = Record<string, SyncConfig>;
+
+export type DatadogServiceFromEntitySerializer<Preload> = Omit<
+  DatadogServiceFromEntitySyncOptions<Preload>,
+  'logger'
+>;
+
+interface DatadogEntitySyncExtensionPoint {
+  defineSerializer<Preload>(
+    serializer: DatadogServiceFromEntitySerializer<Preload>,
+  ): void;
+}
+
+export const datadogEntitySyncExtensionPoint =
+  createExtensionPoint<DatadogEntitySyncExtensionPoint>({
+    id: 'datadog-services.define-serializer',
+  });
