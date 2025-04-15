@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Navigate, Route } from 'react-router-dom';
 
 import { createApp } from '@backstage/app-defaults';

@@ -130,21 +130,23 @@ export class DatadogServiceFromEntitySync<
     preload?: PreloadedData,
     dryRun?: boolean,
   ) {
-    for (const entity of [entities].flat()) {
+    for (const entity of entities) {
       const logger = this.tracker.log.child({
         entityRef: stringifyEntityRef(entity),
       });
       try {
+        const entityTitle = entity.metadata.title ?? entity.metadata.name;
         const service = this.serialize(entity, preload);
         assert(
           service,
-          `The entity ${entity.metadata.title ?? entity.metadata.name} was unable to be processed.`,
+          `The entity ${entityTitle} was unable to be processed.`,
         );
 
         if (!this.#enabled || dryRun) {
           logger.info(
-            `The entity ${entity.metadata.title ?? entity.metadata.name} was not synced due to the sync being disabled.`,
+            `The entity ${entityTitle} was not synced due to the sync being disabled.`,
           );
+
           yield service;
         } else {
           yield await this.#clients.datadog.createOrUpdateServiceDefinitions({
