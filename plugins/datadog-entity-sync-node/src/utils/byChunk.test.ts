@@ -22,8 +22,13 @@ describe('Utility Functions', () => {
         }
       }
 
-      const COUNT = 7;
-      const AMOUNT = 37;
+      const COUNT = 34;
+      const AMOUNT = 97;
+      const CHUNKS_COUNT = Math.ceil(AMOUNT / COUNT);
+      // there will be one less than chunks due to it skipping for the last one.
+      const RATE_LIMIT_WAITS = CHUNKS_COUNT - 1;
+      const PROCESSES_WAITS = CHUNKS_COUNT;
+      const TOTAL_WAITS = RATE_LIMIT_WAITS + PROCESSES_WAITS;
 
       const exampleItems = [...Array(AMOUNT)].map((_, index) => ({
         id: index + 1,
@@ -38,10 +43,7 @@ describe('Utility Functions', () => {
       expect(syncedServices).toEqual(
         exampleItems.map(item => ({ ...item, process: 'acted' })),
       );
-
-      expect(mockedPromiseDelay).toHaveBeenCalledTimes(
-        2 * Math.ceil(AMOUNT / COUNT) - 1,
-      );
+      expect(mockedPromiseDelay).toHaveBeenCalledTimes(TOTAL_WAITS);
     });
   });
 });

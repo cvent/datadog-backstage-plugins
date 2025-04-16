@@ -21,9 +21,10 @@ export async function* byChunk<Items, ReturnType>(
   method: (chunk: Items[]) => AsyncGenerator<ReturnType>,
 ) {
   for (let index = 0; index < items.length; index += count) {
-    yield* method(items.slice(index, index + count));
+    const batchEnd = index + count;
+    yield* method(items.slice(index, batchEnd));
 
-    if (interval && index + count < items.length) {
+    if (interval && batchEnd < items.length) {
       await promiseDelay(interval);
     }
   }
