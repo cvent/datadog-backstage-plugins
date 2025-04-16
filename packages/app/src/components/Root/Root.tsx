@@ -1,5 +1,4 @@
 import type { PropsWithChildren } from 'react';
-import React from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import CreateComponentIcon from '@material-ui/icons/AddCircleOutline';
