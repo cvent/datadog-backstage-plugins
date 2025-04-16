@@ -1,5 +1,6 @@
-import { durationToMilliseconds } from '@backstage/types';
 import type { HumanDuration } from '@backstage/types';
+
+import { promiseDelay } from './promiseDelay';
 
 export interface RateLimit {
   count: number;
@@ -19,19 +20,14 @@ export async function* byChunk<Items, ReturnType>(
   { count, interval }: RateLimit,
   method: (chunk: Items[]) => AsyncGenerator<ReturnType>,
 ) {
-  for (const [index] of items.entries()) {
-    if (index % count === 0) {
-      yield* method(items.slice(index, index + count));
+  for (let index = 0; index < items.length; index += count) {
+    const batchEnd = index + count;
+    yield* method(items.slice(index, batchEnd));
 
-      if (interval) {
-        await promiseDelay(durationToMilliseconds(interval));
-      }
+    if (interval && batchEnd < items.length) {
+      await promiseDelay(interval);
     }
   }
-}
-
-function promiseDelay(milliseconds: number) {
-  return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
 type ValueType<Value> = Value extends boolean | null | undefined
