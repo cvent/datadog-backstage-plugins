@@ -41,7 +41,7 @@
     "@cvent/backstage-plugin-datadog-entity-sync-node": "workspace:^",
     "app": "link:../app",
     "better-sqlite3": "^11.9.1",
-    "node-gyp": "^10.3.1"
+    "node-gyp": "^11.2.0"
   },
   "devDependencies": {
     "@backstage/cli": "^0.32.0"

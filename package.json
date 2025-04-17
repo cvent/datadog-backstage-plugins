@@ -40,7 +40,7 @@
     "eslint-plugin-prettier": "^5.2.6",
     "jest-canvas-mock": "^2.5.2",
     "knip": "^5.50.4",
-    "node-gyp": "^10.3.1",
+    "node-gyp": "^11.2.0",
     "prettier": "^3.5.3",
     "typescript": "~5.8.3"
   },
