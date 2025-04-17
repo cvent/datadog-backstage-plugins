@@ -2581,7 +2581,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.23.9, @babel/runtime@npm:^7.26.10, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.0, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.23.9, @babel/runtime@npm:^7.27.0, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.0, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.27.0
   resolution: "@babel/runtime@npm:7.27.0"
   dependencies:
@@ -2900,12 +2900,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage/canon@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "@backstage/canon@npm:0.3.0"
+"@backstage/canon@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "@backstage/canon@npm:0.3.1"
   dependencies:
-    "@base-ui-components/react": "npm:^1.0.0-alpha.5"
-    "@remixicon/react": "npm:^4.5.0"
+    "@base-ui-components/react": "npm:^1.0.0-alpha.7"
+    "@remixicon/react": "npm:^4.6.0"
+    "@tanstack/react-table": "npm:^8.21.3"
     clsx: "npm:^2.1.1"
   peerDependencies:
     "@types/react": ^17.0.0 || ^18.0.0
@@ -2915,7 +2916,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/0161bb555f4d877c3be775d915834c3a77368e0ea3fbf6f1875c9fc3c1d61bf768b447bb9cbb9a8144db3c8495e00cbf32624d97924ba346f8cb836d1cec3ee2
+  checksum: 10c0/60e88be25b479feb10d359d3bef41113a8a25666283e8236daafbd6d5e67d6c029c3c3f44006e3f6fa4bf5c25ff13e16c31479fd9e124b6af5cf7dbc6e837588
   languageName: node
   linkType: hard
 
@@ -4483,9 +4484,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage/plugin-scaffolder-backend@npm:^1.32.0":
-  version: 1.32.0
-  resolution: "@backstage/plugin-scaffolder-backend@npm:1.32.0"
+"@backstage/plugin-scaffolder-backend@npm:^1.32.1":
+  version: 1.32.1
+  resolution: "@backstage/plugin-scaffolder-backend@npm:1.32.1"
   dependencies:
     "@backstage/backend-common": "npm:^0.25.0"
     "@backstage/backend-defaults": "npm:^0.9.0"
@@ -4541,7 +4542,7 @@ __metadata:
     zen-observable: "npm:^0.10.0"
     zod: "npm:^3.22.4"
     zod-to-json-schema: "npm:^3.20.4"
-  checksum: 10c0/e3b3ebac5fc511c1b1d7f3b79f36b732c76f5710be33c6ea4c888d77bc78136ad4eb606422d13527fb05e93d094c5e76b9fbb4ef3daf044e58bb90b132efaa75
+  checksum: 10c0/a6cd26e18120b8fb6c337e4db7698f8f91308a158dc87aa67eb32dff4d0c1383cc5c14a65d6486a51092cde6af466007824c1911d5c415c32aaef20ae7f94b28
   languageName: node
   linkType: hard
 
@@ -4582,9 +4583,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage/plugin-scaffolder-react@npm:^1.15.0":
-  version: 1.15.0
-  resolution: "@backstage/plugin-scaffolder-react@npm:1.15.0"
+"@backstage/plugin-scaffolder-react@npm:^1.15.1":
+  version: 1.15.1
+  resolution: "@backstage/plugin-scaffolder-react@npm:1.15.1"
   dependencies:
     "@backstage/catalog-client": "npm:^1.9.1"
     "@backstage/catalog-model": "npm:^1.7.3"
@@ -4630,13 +4631,13 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/5e8bcc4d01082ced184ad3e2e52e9f5c955d0d4f444f60abec5f2074c566160b23226cc967875fa2a20f8fc44e538c6b57cadb43393660f9decc3bdd3d9715a0
+  checksum: 10c0/6d1b9b9d6cd73e0a433f66d289c38809b1827bf87e5c97f169c54c2c970cff0fc15a7fcca8016cd036651b00910e50b32aa55071292e9c9ddb47ba048bc53c26
   languageName: node
   linkType: hard
 
-"@backstage/plugin-scaffolder@npm:^1.30.0":
-  version: 1.30.0
-  resolution: "@backstage/plugin-scaffolder@npm:1.30.0"
+"@backstage/plugin-scaffolder@npm:^1.30.1":
+  version: 1.30.1
+  resolution: "@backstage/plugin-scaffolder@npm:1.30.1"
   dependencies:
     "@backstage/catalog-client": "npm:^1.9.1"
     "@backstage/catalog-model": "npm:^1.7.3"
@@ -4651,7 +4652,7 @@ __metadata:
     "@backstage/plugin-catalog-react": "npm:^1.17.0"
     "@backstage/plugin-permission-react": "npm:^0.4.33"
     "@backstage/plugin-scaffolder-common": "npm:^1.5.10"
-    "@backstage/plugin-scaffolder-react": "npm:^1.15.0"
+    "@backstage/plugin-scaffolder-react": "npm:^1.15.1"
     "@backstage/types": "npm:^1.2.1"
     "@codemirror/language": "npm:^6.0.0"
     "@codemirror/legacy-modes": "npm:^6.1.0"
@@ -4691,7 +4692,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/dfd5ecc2db9eba33eec29c2129b3499aa2cb99b6bf7f46b65de7cf7d1636f9c604ca824dca3362c9a1496e58ee652f3133b5c03bdbd9be33d848ab111c5854eb
+  checksum: 10c0/09b9abbc5f6a79fdee160db64989b7d135e526a3843836b853dc0ad406cbc4320782377dd2a06e458312f8a4f127a4fd2112f70fb5b09e1435861a69eaf639c3
   languageName: node
   linkType: hard
 
@@ -5175,16 +5176,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@base-ui-components/react@npm:^1.0.0-alpha.5":
-  version: 1.0.0-alpha.7
-  resolution: "@base-ui-components/react@npm:1.0.0-alpha.7"
+"@base-ui-components/react@npm:^1.0.0-alpha.7":
+  version: 1.0.0-alpha.8
+  resolution: "@base-ui-components/react@npm:1.0.0-alpha.8"
   dependencies:
-    "@babel/runtime": "npm:^7.26.10"
-    "@floating-ui/react": "npm:^0.27.5"
+    "@babel/runtime": "npm:^7.27.0"
+    "@floating-ui/react": "npm:^0.27.7"
     "@floating-ui/utils": "npm:^0.2.9"
-    "@react-aria/overlays": "npm:^3.26.1"
+    "@react-aria/overlays": "npm:^3.27.0"
     prop-types: "npm:^15.8.1"
-    use-sync-external-store: "npm:^1.4.0"
+    use-sync-external-store: "npm:^1.5.0"
   peerDependencies:
     "@types/react": ^17 || ^18 || ^19
     react: ^17 || ^18 || ^19
@@ -5192,7 +5193,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/e60053070ef314cbfdf0eddb60c73e2afea7a60a5fa430cf430d9d4d0fc11325d604f30853ee8f67f8ba2fcc6117b0a818cf093aa822aec3b98eb8d1074331d8
+  checksum: 10c0/3465e17105d05fd9196a19dd85bff0d2b3c30c72b08aef23831b72a63eb8247d10726a44b9c746844fa1b35b13b2f5098b12c78c7954d3a7a49d9e78c4d5a986
   languageName: node
   linkType: hard
 
@@ -6514,7 +6515,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react@npm:^0.27.5":
+"@floating-ui/react@npm:^0.27.7":
   version: 0.27.7
   resolution: "@floating-ui/react@npm:0.27.7"
   dependencies:
@@ -9873,7 +9874,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-aria/overlays@npm:^3.26.1":
+"@react-aria/overlays@npm:^3.27.0":
   version: 3.27.0
   resolution: "@react-aria/overlays@npm:3.27.0"
   dependencies:
@@ -10088,7 +10089,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remixicon/react@npm:^4.5.0":
+"@remixicon/react@npm:^4.6.0":
   version: 4.6.0
   resolution: "@remixicon/react@npm:4.6.0"
   peerDependencies:
@@ -12255,6 +12256,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/react-table@npm:^8.21.3":
+  version: 8.21.3
+  resolution: "@tanstack/react-table@npm:8.21.3"
+  dependencies:
+    "@tanstack/table-core": "npm:8.21.3"
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 10c0/85d1d0fcb690ecc011f68a5a61c96f82142e31a0270dcf9cbc699a6f36715b1653fe6ff1518302a6d08b7093351fc4cabefd055a7db3cd8ac01e068956b0f944
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-virtual@npm:^3.0.0-beta.60":
   version: 3.13.6
   resolution: "@tanstack/react-virtual@npm:3.13.6"
@@ -12264,6 +12277,13 @@ __metadata:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
   checksum: 10c0/3d2fdf024cb9189981cc015518a34a771a57cd698ca775022ad481431e6f26e596309f57d2238ef15f3b53b805879edaed6394e4cad1bb550ee92259e4d52633
+  languageName: node
+  linkType: hard
+
+"@tanstack/table-core@npm:8.21.3":
+  version: 8.21.3
+  resolution: "@tanstack/table-core@npm:8.21.3"
+  checksum: 10c0/40e3560e6d55e07cc047024aa7f83bd47a9323d21920d4adabba8071fd2d21230c48460b26cedf392588f8265b9edc133abb1b0d6d0adf4dae0970032900a8c9
   languageName: node
   linkType: hard
 
@@ -14151,7 +14171,7 @@ __metadata:
   resolution: "app@workspace:packages/app"
   dependencies:
     "@backstage/app-defaults": "npm:^1.6.1"
-    "@backstage/canon": "npm:^0.3.0"
+    "@backstage/canon": "npm:^0.3.1"
     "@backstage/catalog-model": "npm:^1.7.3"
     "@backstage/cli": "npm:^0.32.0"
     "@backstage/core-app-api": "npm:^1.16.1"
@@ -14165,7 +14185,7 @@ __metadata:
     "@backstage/plugin-catalog-import": "npm:^0.12.13"
     "@backstage/plugin-org": "npm:^0.6.38"
     "@backstage/plugin-permission-react": "npm:^0.4.33"
-    "@backstage/plugin-scaffolder": "npm:^1.30.0"
+    "@backstage/plugin-scaffolder": "npm:^1.30.1"
     "@backstage/plugin-search": "npm:^1.4.25"
     "@backstage/plugin-techdocs": "npm:^1.12.5"
     "@backstage/plugin-techdocs-module-addons-contrib": "npm:^1.1.23"
@@ -14831,7 +14851,7 @@ __metadata:
     "@backstage/plugin-permission-backend": "npm:^0.6.0"
     "@backstage/plugin-permission-backend-module-allow-all-policy": "npm:^0.2.7"
     "@backstage/plugin-proxy-backend": "npm:^0.6.1"
-    "@backstage/plugin-scaffolder-backend": "npm:^1.32.0"
+    "@backstage/plugin-scaffolder-backend": "npm:^1.32.1"
     "@backstage/plugin-scaffolder-backend-module-github": "npm:^0.7.0"
     "@backstage/plugin-search-backend": "npm:^2.0.1"
     "@backstage/plugin-search-backend-module-catalog": "npm:^0.3.3"
@@ -32162,7 +32182,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.4.0":
+"use-sync-external-store@npm:^1.4.0, use-sync-external-store@npm:^1.5.0":
   version: 1.5.0
   resolution: "use-sync-external-store@npm:1.5.0"
   peerDependencies:
