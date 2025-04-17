@@ -31,7 +31,7 @@ const MOCKED_ENTITIES = [
       lifecycle: 'experimental',
     },
   },
-].flatMap(entity => Array(7).map(_ => entity));
+].flatMap(entity => Array(7).fill(entity));
 
 const MOCKED_RESPONSE = [
   {
@@ -50,7 +50,7 @@ const MOCKED_RESPONSE = [
     ],
     tags: ['system:datadog-example'],
   },
-].flatMap(response => Array(7).map(_ => response));
+].flatMap(response => Array(7).fill(response));
 
 describe('DatadogServiceFromEntitySync', () => {
   beforeEach(() => {
