@@ -1,5 +1,5 @@
-export { datadogServiceDefinitionRef } from './datadogServiceDefinitionApi';
-export type { DatadogServiceDefinition } from './datadogServiceDefinitionApi';
+export { datadogEntityRef } from './datadogSoftwareCatalogApi';
+export type { DatadogEntityDefinition } from './datadogSoftwareCatalogApi';
 export { BaseScheduledSync } from './BaseScheduledSync';
 export type { BaseScheduledSyncOptions } from './BaseScheduledSync';
 export { byChunk, valueGuard } from './utils/byChunk';
@@ -13,5 +13,5 @@ export type {
   DatadogServiceFromEntitySerializer,
   SyncConfig as DatadogEntitySyncConfig,
 } from './extensions';
-export { serializeComponentToDatadogService } from './transforms/serializeComponentToDatadogService';
-export type { ExtraSerializationInfo } from './transforms/serializeComponentToDatadogService';
+export type { ExtraSerializationInfo } from './transforms/defaultComponentToDatadogSerializer';
+export { defaultSerializer } from './transforms/defaultComponentToDatadogSerializer';

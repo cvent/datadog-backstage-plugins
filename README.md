@@ -1,12 +1,16 @@
 # [Datadog](https://www.datadoghq.com) plugin for [Backstage](https://backstage.io)
 
-A set of datadog backstage plugins to help integrate a Backstage catalog and Datadog service catalog together.
+A Backstage plugin to sync entities from the Backstage catalog to [Datadog Software Catalog](https://docs.datadoghq.com/software_catalog/).
 
 ## Features
-* **[Sync a Backstage catalog to Datadog](./plugins/datadog-entity-sync-backend)**
-  : Configure a serializer
-  to take a backstage entity, convert it to a Datadog service definition, and [upsert it to Datadog](https://docs.datadoghq.com/api/latest/service-definition/#create-or-update-service-definition). *Currently ony using the v2 scheme. v3 support will be coming shortly*
+
+* Out of the box support for Services
+* Supports throttling (is configurable)
+* Supports custom formatting
+* Supports all backstage Entities
+* Supports custom schedules
+* Supports multiple syncs
 
 ## Getting Started
 
-See the installation [instructions](./plugins/datadog-entity-sync-backend#installation) and [customization](./plugins/datadog-entity-sync-backend#customization) in the `datadog-entity-sync-backend` [plugin](./plugins/datadog-entity-sync-backend#installation) for more details.
+Check out the installation [instructions](./plugins/datadog-entity-sync-backend#installation) for enabling in your Backstage instance.  You can also [customize](./plugins/datadog-entity-sync-backend#customization) how the plugin operates.

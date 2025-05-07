@@ -3,12 +3,12 @@ import { v2 } from '@datadog/datadog-api-client';
 import { mockServices } from '@backstage/backend-test-utils';
 import { catalogServiceMock } from '@backstage/plugin-catalog-node/testUtils';
 
-import { serializeComponentToDatadogService } from '../transforms/serializeComponentToDatadogService';
+import { defaultSerializer } from '../transforms/defaultComponentToDatadogSerializer';
 
 import { DatadogServiceFromEntitySync } from './DatadogServiceFromEntitySync';
 
-const MockedServiceDefinitionApi =
-  v2.ServiceDefinitionApi as jest.Mock<v2.ServiceDefinitionApi>;
+const MockedSoftwareCatalogApi =
+  v2.SoftwareCatalogApi as jest.Mock<v2.SoftwareCatalogApi>;
 
 jest.mock('@datadog/datadog-api-client');
 
@@ -26,21 +26,24 @@ const MOCKED_ENTITIES = [
     },
     spec: {
       type: 'service',
-      owner: 'example-team',
       system: 'datadog-example',
       lifecycle: 'experimental',
     },
   },
 ].flatMap(entity => Array(7).fill(entity));
 
-const MOCKED_RESPONSE = [
-  {
-    schemaVersion: 'v2.2',
-    ddService: 'datadog-example-apm-service',
-    team: 'example-team',
-    application: 'datadog-example',
-    lifecycle: 'experimental',
+const DEFAULT_RESPONSE = {
+  apiVersion: 'v3',
+  kind: 'service',
+  metadata: {
+    name: 'datadog-example-apm-service',
     links: [
+      {
+        name: 'Backstage',
+        provider: 'backstage',
+        type: 'doc',
+        url: 'http://localhost:3000/catalog/default/Component/datadog-example-apm-service',
+      },
       {
         name: 'TechDocs',
         provider: 'backstage',
@@ -50,47 +53,91 @@ const MOCKED_RESPONSE = [
     ],
     tags: ['system:datadog-example'],
   },
-].flatMap(response => Array(7).fill(response));
+  spec: {
+    lifecycle: 'experimental',
+  },
+};
 
 describe('DatadogServiceFromEntitySync', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  const sync = new DatadogServiceFromEntitySync(
-    {
-      datadog: new MockedServiceDefinitionApi(),
-      catalog: catalogServiceMock({ entities: MOCKED_ENTITIES }),
-      auth: mockServices.auth.mock(),
-      events: mockServices.events.mock(),
-    },
-    {
-      syncId: 'test',
-      taskRunner: mockServices.scheduler.mock().createScheduledTaskRunner({
-        frequency: {
-          milliseconds: 30,
-        },
-        timeout: {
-          seconds: 1,
-        },
-      }),
-      serialize: entity =>
-        serializeComponentToDatadogService(entity, {
-          appBaseUrl: 'http://localhost:3000',
-        }),
-      rateLimit: {
-        count: 2,
-        interval: {
-          seconds: 1,
-        },
+  describe('with a custom serializer', () => {
+    const sync = new DatadogServiceFromEntitySync(
+      {
+        datadog: new MockedSoftwareCatalogApi(),
+        catalog: catalogServiceMock({ entities: MOCKED_ENTITIES }),
+        auth: mockServices.auth.mock(),
+        events: mockServices.events.mock(),
       },
-      logger: mockServices.logger.mock(),
-    },
-  );
+      {
+        syncId: 'test',
+        taskRunner: mockServices.scheduler.mock().createScheduledTaskRunner({
+          frequency: {
+            milliseconds: 30,
+          },
+          timeout: {
+            seconds: 1,
+          },
+        }),
+        serialize: entity =>
+          defaultSerializer(entity, {
+            appBaseUrl: 'http://localhost:3000',
+          }),
+        rateLimit: {
+          count: 2,
+          interval: {
+            seconds: 1,
+          },
+        },
+        logger: mockServices.logger.mock(),
+      },
+    );
 
-  it('returns expected public response', async () => {
-    const syncedServices = await sync.sync();
+    it('returns expected public response', async () => {
+      const syncedServices = await sync.sync();
 
-    expect(syncedServices).toEqual(MOCKED_RESPONSE);
+      expect(syncedServices).toEqual(Array(7).fill(DEFAULT_RESPONSE));
+    });
+  });
+
+  describe('with the default serializer', () => {
+    const sync = new DatadogServiceFromEntitySync(
+      {
+        datadog: new MockedSoftwareCatalogApi(),
+        catalog: catalogServiceMock({ entities: MOCKED_ENTITIES }),
+        auth: mockServices.auth.mock(),
+        events: mockServices.events.mock(),
+      },
+      {
+        syncId: 'test',
+        taskRunner: mockServices.scheduler.mock().createScheduledTaskRunner({
+          frequency: {
+            milliseconds: 30,
+          },
+          timeout: {
+            seconds: 1,
+          },
+        }),
+        rateLimit: {
+          count: 2,
+          interval: {
+            seconds: 1,
+          },
+        },
+        logger: mockServices.logger.mock(),
+      },
+    );
+
+    it('returns expected public response', async () => {
+      const syncedServices = await sync.sync();
+      const mockedResponse = {
+        ...DEFAULT_RESPONSE,
+        metadata: { ...DEFAULT_RESPONSE.metadata, links: [] },
+      };
+
+      expect(syncedServices).toEqual(Array(7).fill(mockedResponse));
+    });
   });
 });

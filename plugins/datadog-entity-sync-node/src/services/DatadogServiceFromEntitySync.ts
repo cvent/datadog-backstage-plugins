@@ -13,18 +13,20 @@ import type { EventParams, EventsService } from '@backstage/plugin-events-node';
 
 import type { BaseScheduledSyncOptions } from '@cvent/backstage-plugin-datadog-entity-sync-node';
 import type {
-  DatadogServiceDefinition,
-  datadogServiceDefinitionRef,
+  DatadogEntityDefinition,
+  datadogEntityRef,
 } from '@cvent/backstage-plugin-datadog-entity-sync-node';
-import { BaseScheduledSync } from '@cvent/backstage-plugin-datadog-entity-sync-node';
+import {
+  BaseScheduledSync,
+  defaultSerializer,
+} from '@cvent/backstage-plugin-datadog-entity-sync-node';
 
 import type { SyncConfig } from '../extensions';
-import { serializeComponentToDatadogService } from '../transforms/serializeComponentToDatadogService';
 import type { RateLimit } from '../utils/byChunk';
 import { byChunkAsync } from '../utils/byChunk';
 
 interface Clients {
-  datadog: NonNullable<typeof datadogServiceDefinitionRef.T>;
+  datadog: NonNullable<typeof datadogEntityRef.T>;
   catalog: typeof catalogServiceRef.T;
   auth: AuthService;
   events: EventsService;
@@ -36,7 +38,7 @@ export type SingleEntityFilterQuery<FIlter = EntityFilterQuery> =
 export interface DatadogServiceFromEntitySyncOptions<Preload = unknown>
   extends BaseScheduledSyncOptions,
     Omit<SyncConfig, 'schedule'> {
-  serialize?: (entity: Entity, preload?: Preload) => DatadogServiceDefinition;
+  serialize?: (entity: Entity, preload?: Preload) => DatadogEntityDefinition;
   preload?: (clients: Clients, entities: Entity[]) => Promise<Preload>;
 }
 
@@ -149,7 +151,7 @@ export class DatadogServiceFromEntitySync<
 
           yield service;
         } else {
-          yield await this.#clients.datadog.createOrUpdateServiceDefinitions({
+          yield await this.#clients.datadog.upsertCatalogEntity({
             body: service,
           });
         }
@@ -170,10 +172,13 @@ export class DatadogServiceFromEntitySync<
     return void this.logger.debug('There was no preload function defined');
   }
 
-  protected serialize(entity: Entity, _preload?: PreloadedData) {
+  protected serialize(
+    entity: Entity,
+    _preload?: PreloadedData,
+  ): DatadogEntityDefinition | undefined {
     if (!isComponentEntity(entity)) return undefined;
 
-    return serializeComponentToDatadogService(entity);
+    return defaultSerializer(entity);
   }
 }
 

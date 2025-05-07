@@ -18,6 +18,14 @@ export interface Config {
        * @visibility secret
        */
       appKey: string;
+
+      /**
+       * Datadog Site to use for API client
+       * @visibility backend
+       * @defaultValue datadoghq.com
+       * @see {@link https://docs.datadoghq.com/getting_started/site/#access-the-datadog-site}
+       */
+      site?: string;
     };
 
     /**
