@@ -3,10 +3,7 @@ import { strict as assert } from 'node:assert';
 import type { AuthService } from '@backstage/backend-plugin-api';
 import type { EntityFilterQuery } from '@backstage/catalog-client';
 import { CATALOG_FILTER_EXISTS } from '@backstage/catalog-client';
-import {
-  isComponentEntity,
-  stringifyEntityRef,
-} from '@backstage/catalog-model';
+import { stringifyEntityRef } from '@backstage/catalog-model';
 import type { Entity } from '@backstage/catalog-model';
 import type { catalogServiceRef } from '@backstage/plugin-catalog-node';
 import type { EventParams, EventsService } from '@backstage/plugin-events-node';
@@ -18,7 +15,7 @@ import type {
 } from '@cvent/backstage-plugin-datadog-entity-sync-node';
 import {
   BaseScheduledSync,
-  defaultSerializer,
+  defaultComponentSerializer,
 } from '@cvent/backstage-plugin-datadog-entity-sync-node';
 
 import type { SyncConfig } from '../extensions';
@@ -175,10 +172,8 @@ export class DatadogServiceFromEntitySync<
   protected serialize(
     entity: Entity,
     _preload?: PreloadedData,
-  ): DatadogEntityDefinition | undefined {
-    if (!isComponentEntity(entity)) return undefined;
-
-    return defaultSerializer(entity);
+  ): DatadogEntityDefinition {
+    return defaultComponentSerializer(entity);
   }
 }
 

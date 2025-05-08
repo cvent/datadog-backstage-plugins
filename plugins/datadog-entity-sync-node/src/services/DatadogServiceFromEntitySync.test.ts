@@ -3,7 +3,7 @@ import { v2 } from '@datadog/datadog-api-client';
 import { mockServices } from '@backstage/backend-test-utils';
 import { catalogServiceMock } from '@backstage/plugin-catalog-node/testUtils';
 
-import { defaultSerializer } from '../transforms/defaultComponentToDatadogSerializer';
+import { defaultComponentSerializer } from '../transforms/defaultComponentSerializer';
 
 import { DatadogServiceFromEntitySync } from './DatadogServiceFromEntitySync';
 
@@ -29,6 +29,12 @@ const MOCKED_ENTITIES = [
       system: 'datadog-example',
       lifecycle: 'experimental',
     },
+    relations: [
+      {
+        type: 'ownedBy',
+        targetRef: 'group:default/example-team',
+      },
+    ],
   },
 ].flatMap(entity => Array(7).fill(entity));
 
@@ -42,16 +48,17 @@ const DEFAULT_RESPONSE = {
         name: 'Backstage',
         provider: 'backstage',
         type: 'doc',
-        url: 'http://localhost:3000/catalog/default/Component/datadog-example-apm-service',
+        url: 'https://backstage/catalog/default/Component/datadog-example-apm-service',
       },
       {
         name: 'TechDocs',
         provider: 'backstage',
         type: 'doc',
-        url: 'http://localhost:3000/docs/default/Component/datadog-example-apm-service',
+        url: 'https://backstage/docs/default/Component/datadog-example-apm-service',
       },
     ],
     tags: ['system:datadog-example'],
+    owner: 'example-team',
   },
   spec: {
     lifecycle: 'experimental',
@@ -82,8 +89,8 @@ describe('DatadogServiceFromEntitySync', () => {
           },
         }),
         serialize: entity =>
-          defaultSerializer(entity, {
-            appBaseUrl: 'http://localhost:3000',
+          defaultComponentSerializer(entity, {
+            appBaseUrl: 'https://backstage',
           }),
         rateLimit: {
           count: 2,

@@ -10,7 +10,7 @@ import type {
   ExtraSerializationInfo,
 } from '@cvent/backstage-plugin-datadog-entity-sync-node';
 import {
-  defaultSerializer,
+  defaultComponentSerializer,
   valueGuard,
 } from '@cvent/backstage-plugin-datadog-entity-sync-node';
 
@@ -30,10 +30,10 @@ export function datadogServiceFromComponentAndGroupSerializer(
     slackBaseUrl?: string;
   } & ExtraSerializationInfo,
 ): DatadogEntityDefinition {
-  const defaultSerialization = defaultSerializer(entity, extraInfo);
+  const defaultSerialization = defaultComponentSerializer(entity, extraInfo);
 
   return {
-    ...defaultSerializer(entity, extraInfo),
+    ...defaultComponentSerializer(entity, extraInfo),
     metadata: {
       ...defaultSerialization.metadata,
       ...valueGuard(team?.metadata.title ?? team?.metadata.name, teamName => ({

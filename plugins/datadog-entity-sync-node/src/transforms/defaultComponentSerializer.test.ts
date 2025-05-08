@@ -1,32 +1,43 @@
+import { cloneDeep } from 'lodash';
+
 import type { Entity } from '@backstage/catalog-model/index';
 
-import type { ExtraSerializationInfo } from './defaultComponentToDatadogSerializer';
-import { defaultSerializer } from './defaultComponentToDatadogSerializer';
+import type { ExtraSerializationInfo } from './defaultComponentSerializer';
+import { defaultComponentSerializer } from './defaultComponentSerializer';
 
 const defaultEntity: Entity = {
   apiVersion: 'backstage.io/v1beta3',
   kind: 'Component',
   metadata: {
     name: 'mocked-service',
+    tags: ['tag1:value1', 'tag2:value2'],
   },
   spec: {
+    type: 'application',
+    lifecycle: 'production',
     owner: 'mocked-team',
   },
+  relations: [
+    {
+      type: 'ownedBy',
+      targetRef: 'group:default/mocked-team',
+    },
+  ],
 };
 
 const defaultExtraInfo: ExtraSerializationInfo = {
   appBaseUrl: 'https://backstage',
 };
 
-describe('defaultSerializer', () => {
+describe('defaultComponentSerializer', () => {
   let mockedEntity: Entity;
 
   beforeEach(() => {
-    mockedEntity = Object.assign({}, {}, defaultEntity);
+    mockedEntity = cloneDeep(defaultEntity);
   });
 
   it('should transform a component entity into Datadog Software Catalog', () => {
-    const serviceDefinition = defaultSerializer(mockedEntity);
+    const serviceDefinition = defaultComponentSerializer(mockedEntity);
 
     expect(serviceDefinition).toBeDefined();
     expect(serviceDefinition).toEqual(
@@ -35,6 +46,11 @@ describe('defaultSerializer', () => {
         kind: 'service',
         metadata: expect.objectContaining({
           name: 'mocked-service',
+          owner: 'mocked-team',
+          tags: expect.arrayContaining(['tag1:value1', 'tag2:value2']),
+        }),
+        spec: expect.objectContaining({
+          lifecycle: 'production',
         }),
       }),
     );
@@ -44,7 +60,7 @@ describe('defaultSerializer', () => {
     mockedEntity.kind = 'Group';
 
     expect(() => {
-      defaultSerializer(mockedEntity);
+      defaultComponentSerializer(mockedEntity);
     }).toThrow(Error);
   });
 
@@ -53,45 +69,40 @@ describe('defaultSerializer', () => {
       'datadoghq.com/service-name': 'mocked-service-override',
     };
 
-    const serviceDefinition = defaultSerializer(mockedEntity);
+    const serviceDefinition = defaultComponentSerializer(mockedEntity);
 
     expect(serviceDefinition).toBeDefined();
     expect(serviceDefinition.metadata?.name).toBe('mocked-service-override');
   });
 
-  it('should set the lifecycle if one is provided', () => {
-    mockedEntity.spec = {
-      ...mockedEntity.spec,
-      lifecycle: 'production',
-    };
+  it('should add backstage labels as additional tags', () => {
+    mockedEntity.metadata.labels = { label1: 'value1', label2: 'value2' };
 
-    const serviceDefinition = defaultSerializer(mockedEntity);
-
-    expect(serviceDefinition).toBeDefined();
-    expect(serviceDefinition.spec?.lifecycle).toBe('production');
-  });
-
-  it('should add backstage labels as tags', () => {
-    mockedEntity.metadata.labels = { tag1: 'value1', tag2: 'value2' };
-
-    const serviceDefinition = defaultSerializer(mockedEntity);
+    const serviceDefinition = defaultComponentSerializer(mockedEntity);
 
     const tags = serviceDefinition.metadata?.tags ?? [];
 
     expect(serviceDefinition).toBeDefined();
     expect(tags).toEqual(
-      expect.arrayContaining(['tag1:value1', 'tag2:value2']),
+      expect.arrayContaining([
+        'label1:value1',
+        'label2:value2',
+        'tag1:value1',
+        'tag2:value2',
+      ]),
     );
   });
 
   it('should the system name as a tag', () => {
     mockedEntity.metadata.labels = {};
     mockedEntity.spec = {
-      ...mockedEntity.spec,
       system: 'mocked-system',
     };
 
-    const serviceDefinition = defaultSerializer(mockedEntity, defaultExtraInfo);
+    const serviceDefinition = defaultComponentSerializer(
+      mockedEntity,
+      defaultExtraInfo,
+    );
 
     const tags = serviceDefinition.metadata?.tags ?? [];
 
@@ -102,7 +113,7 @@ describe('defaultSerializer', () => {
   it('should set the description', () => {
     mockedEntity.metadata.description = 'mocked-description';
 
-    const serviceDefinition = defaultSerializer(mockedEntity);
+    const serviceDefinition = defaultComponentSerializer(mockedEntity);
 
     expect(serviceDefinition).toBeDefined();
     expect(serviceDefinition.metadata?.description).toBe('mocked-description');
@@ -117,7 +128,10 @@ describe('defaultSerializer', () => {
       },
     ];
 
-    const serviceDefinition = defaultSerializer(mockedEntity, defaultExtraInfo);
+    const serviceDefinition = defaultComponentSerializer(
+      mockedEntity,
+      defaultExtraInfo,
+    );
 
     const links = serviceDefinition.metadata?.links ?? [];
 
@@ -134,9 +148,10 @@ describe('defaultSerializer', () => {
   });
 
   it('should include a link to backstage if the base url is provided', () => {
-    mockedEntity.metadata.links = [];
-
-    const serviceDefinition = defaultSerializer(mockedEntity, defaultExtraInfo);
+    const serviceDefinition = defaultComponentSerializer(
+      mockedEntity,
+      defaultExtraInfo,
+    );
 
     const links = serviceDefinition.metadata?.links ?? [];
 
@@ -154,12 +169,14 @@ describe('defaultSerializer', () => {
   });
 
   it('should include a link to techdocs if they are defined', () => {
-    mockedEntity.metadata.links = [];
     mockedEntity.metadata.annotations = {
       'backstage.io/techdocs-ref': './',
     };
 
-    const serviceDefinition = defaultSerializer(mockedEntity, defaultExtraInfo);
+    const serviceDefinition = defaultComponentSerializer(
+      mockedEntity,
+      defaultExtraInfo,
+    );
 
     const links = serviceDefinition.metadata?.links ?? [];
 
@@ -182,7 +199,10 @@ describe('defaultSerializer', () => {
         'url:https://github.com/organization/repository-name/tree/master/packages/package-name/',
     };
 
-    const serviceDefinition = defaultSerializer(mockedEntity, defaultExtraInfo);
+    const serviceDefinition = defaultComponentSerializer(
+      mockedEntity,
+      defaultExtraInfo,
+    );
 
     expect(serviceDefinition).toBeDefined();
     expect(serviceDefinition.datadog).toEqual(

@@ -13,5 +13,5 @@ export type {
   DatadogServiceFromEntitySerializer,
   SyncConfig as DatadogEntitySyncConfig,
 } from './extensions';
-export type { ExtraSerializationInfo } from './transforms/defaultComponentToDatadogSerializer';
-export { defaultSerializer } from './transforms/defaultComponentToDatadogSerializer';
+export type { ExtraSerializationInfo } from './transforms/defaultComponentSerializer';
+export { defaultComponentSerializer } from './transforms/defaultComponentSerializer';

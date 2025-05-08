@@ -59,11 +59,11 @@ to customize these options. Here is what the default options looks like.
 This is the base extension point that comes with included in the `@cvent/backstage-plugin-datadog-entity-sync-backend` package. You can add it to your backend as such.
 
 ```typescript
-import { defaultSerializer } from '@cvent/backstage-plugin-datadog-entity-sync-backend';
+import { defaultComponentSerializer } from '@cvent/backstage-plugin-datadog-entity-sync-backend';
 const backend = createBackend();
 // ...
 backend.add(import('@cvent/backstage-plugin-datadog-entity-sync-backend'));
-backend.add(defaultSerializer);
+backend.add(defaultComponentSerializer);
 ```
 
 And here is the default serializer.
@@ -71,7 +71,7 @@ And here is the default serializer.
 ```typescript
 import { coreServices, createBackendModule, SchedulerServiceTaskScheduleDefinition } from '@backstage/backend-plugin-api';
 import { EntityFilterQuery } from '@backstage/catalog-client';
-import { defaultSerializer } from '@cvent/backstage-backstage-plugin-datadog-entity-sync-node';
+import { defaultComponentSerializer } from '@cvent/backstage-backstage-plugin-datadog-entity-sync-node';
 import { datadogServicesExtensionPoint } from '@cvent/backstage-backstage-plugin-datadog-entity-sync-node';
 
 const SYNC_ID = 'datadog-service-from-component';
@@ -97,7 +97,7 @@ export const datadogServiceFromComponentAndGroupSync = createBackendModule({
           taskRunner: scheduler.createScheduledTaskRunner(schedule),
           entityFilter,
           rateLimit,
-          serialize: defaultSerializer,
+          serialize: defaultComponentSerializer,
           id: SYNC_ID,
         });
       },
@@ -176,7 +176,7 @@ export const datadogServiceFromComponentAndGroupSync = createBackendModule({
             );
 
             return {
-              ...defaultSerializer(entity, { appBaseUrl }),
+              ...defaultComponentSerializer(entity, { appBaseUrl }),
               metadata: {
                 ...defaultSerialization.metadata,
                 ...valueGuard(
