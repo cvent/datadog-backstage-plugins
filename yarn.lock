@@ -5953,10 +5953,15 @@ __metadata:
     "@backstage/cli": "npm:^0.32.0"
     "@backstage/plugin-catalog-node": "npm:^1.16.3"
     "@backstage/plugin-events-node": "npm:^0.4.10"
+    "@backstage/plugin-techdocs-common": "npm:^0.1.0"
     "@backstage/types": "npm:^1.2.1"
     "@datadog/datadog-api-client": "npm:^1.34.1"
     "@types/git-url-parse": "npm:^16.0.2"
+    "@types/lodash": "npm:^4"
     git-url-parse: "npm:^16.1.0"
+    lodash: "npm:^4.17.21"
+  peerDependencies:
+    lodash: "*"
   languageName: unknown
   linkType: soft
 
@@ -12857,6 +12862,13 @@ __metadata:
   dependencies:
     keyv: "npm:*"
   checksum: 10c0/ad626918f1843035b732b582263890a67d73dc3ff80da97e51fbe0ae3f2fe7a1ada2eef1bd89605c5fb739444110e696c0e0703d9b49a842a2f924c6e9164faa
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:^4":
+  version: 4.17.16
+  resolution: "@types/lodash@npm:4.17.16"
+  checksum: 10c0/cf017901b8ab1d7aabc86d5189d9288f4f99f19a75caf020c0e2c77b8d4cead4db0d0b842d009b029339f92399f49f34377dd7c2721053388f251778b4c23534
   languageName: node
   linkType: hard
 

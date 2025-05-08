@@ -6,11 +6,11 @@ import type {
 } from '@backstage/catalog-model';
 
 import type {
-  DatadogServiceDefinition,
+  DatadogEntityDefinition,
   ExtraSerializationInfo,
 } from '@cvent/backstage-plugin-datadog-entity-sync-node';
 import {
-  serializeComponentToDatadogService,
+  defaultComponentSerializer,
   valueGuard,
 } from '@cvent/backstage-plugin-datadog-entity-sync-node';
 
@@ -29,22 +29,27 @@ export function datadogServiceFromComponentAndGroupSerializer(
   extraInfo?: {
     slackBaseUrl?: string;
   } & ExtraSerializationInfo,
-): DatadogServiceDefinition {
+): DatadogEntityDefinition {
+  const defaultSerialization = defaultComponentSerializer(entity, extraInfo);
+
   return {
-    ...serializeComponentToDatadogService(entity, extraInfo),
-    ...valueGuard(team?.metadata.title ?? team?.metadata.name, teamName => ({
-      team: teamName,
-    })),
-    ...valueGuard(
-      isGroupWithContacts(team) && getSlackChannels(team),
-      slackChannels => ({
-        contacts: slackChannels.map(slackChannel => ({
-          type: 'slack',
-          name: `#${slackChannel}`,
-          contact: `${extraInfo?.slackBaseUrl}/archives/${slackChannel}`,
-        })),
-      }),
-    ),
+    ...defaultComponentSerializer(entity, extraInfo),
+    metadata: {
+      ...defaultSerialization.metadata,
+      ...valueGuard(team?.metadata.title ?? team?.metadata.name, teamName => ({
+        owner: teamName,
+      })),
+      ...valueGuard(
+        isGroupWithContacts(team) && getSlackChannels(team),
+        slackChannels => ({
+          contacts: slackChannels.map(slackChannel => ({
+            type: 'slack',
+            name: `#${slackChannel}`,
+            contact: `${extraInfo?.slackBaseUrl}/archives/${slackChannel}`,
+          })),
+        }),
+      ),
+    },
   };
 }
 

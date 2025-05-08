@@ -6,8 +6,10 @@ import { catalogServiceRef } from '@backstage/plugin-catalog-node';
 import { eventsServiceRef } from '@backstage/plugin-events-node';
 
 import type { DatadogServiceFromEntitySerializer } from '@cvent/backstage-plugin-datadog-entity-sync-node';
-import { DatadogServiceFromEntitySync } from '@cvent/backstage-plugin-datadog-entity-sync-node';
-import { datadogServiceDefinitionRef } from '@cvent/backstage-plugin-datadog-entity-sync-node';
+import {
+  datadogEntityRef,
+  DatadogServiceFromEntitySync,
+} from '@cvent/backstage-plugin-datadog-entity-sync-node';
 import { datadogEntitySyncExtensionPoint } from '@cvent/backstage-plugin-datadog-entity-sync-node';
 
 import { createRouter } from './router';
@@ -35,7 +37,7 @@ export const datadogServicesPlugin = createBackendPlugin({
         auth: coreServices.auth,
         httpRouter: coreServices.httpRouter,
         catalog: catalogServiceRef,
-        datadog: datadogServiceDefinitionRef,
+        datadog: datadogEntityRef,
         events: eventsServiceRef,
       },
       async init({ logger, httpRouter, ...deps }) {
