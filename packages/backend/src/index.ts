@@ -58,4 +58,4 @@ backend.add(import('@backstage/plugin-search-backend-module-techdocs'));
 backend.add(import('@cvent/backstage-plugin-datadog-entity-sync-backend'));
 backend.add(datadogServiceFromComponentAndGroupSync);
 
-backend.start();
+void backend.start();

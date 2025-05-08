@@ -27,6 +27,7 @@ export const datadogServiceFromComponentAndGroupSync = createBackendModule({
         catalog: catalogServiceRef,
         datadogSync: datadogEntitySyncExtensionPoint,
       },
+      // eslint-disable-next-line @typescript-eslint/require-await
       async init({ datadogSync, config, scheduler, catalog, auth }) {
         const { entityFilter, rateLimit, schedule, enabled } =
           config.get<DatadogEntitySyncConfig>(`datadog.sync.${SYNC_ID}`);
@@ -60,7 +61,7 @@ export const datadogServiceFromComponentAndGroupSync = createBackendModule({
               relation => relation.type === RELATION_OWNED_BY,
             )?.targetRef;
 
-            const ownerEntity = preload?.items.find(
+            const ownerEntity = preload.items.find(
               owner => stringifyEntityRef(owner) === ownerRef,
             );
 

@@ -4914,33 +4914,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage/plugin-techdocs-module-addons-contrib@npm:^1.1.23":
-  version: 1.1.23
-  resolution: "@backstage/plugin-techdocs-module-addons-contrib@npm:1.1.23"
-  dependencies:
-    "@backstage/core-components": "npm:^0.17.1"
-    "@backstage/core-plugin-api": "npm:^1.10.6"
-    "@backstage/frontend-plugin-api": "npm:^0.10.1"
-    "@backstage/integration": "npm:^1.16.3"
-    "@backstage/integration-react": "npm:^1.2.6"
-    "@backstage/plugin-techdocs-react": "npm:^1.2.16"
-    "@material-ui/core": "npm:^4.12.2"
-    "@material-ui/icons": "npm:^4.9.1"
-    "@react-hookz/web": "npm:^24.0.0"
-    git-url-parse: "npm:^15.0.0"
-    photoswipe: "npm:^5.3.7"
-  peerDependencies:
-    "@types/react": ^17.0.0 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-    react-dom: ^17.0.0 || ^18.0.0
-    react-router-dom: ^6.3.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: 10c0/11d94269d59b613338cec0f9f534db6fbbfface906d92d3c5a4e0f3556dbb0e0fe5aae35d3d913ac708583826545a4389946646f6156f754f2e6f1fd80b0a841
-  languageName: node
-  linkType: hard
-
 "@backstage/plugin-techdocs-node@npm:^1.13.2":
   version: 1.13.2
   resolution: "@backstage/plugin-techdocs-node@npm:1.13.2"
@@ -14180,8 +14153,6 @@ __metadata:
     "@backstage/plugin-scaffolder": "npm:^1.30.0"
     "@backstage/plugin-search": "npm:^1.4.25"
     "@backstage/plugin-techdocs": "npm:^1.12.5"
-    "@backstage/plugin-techdocs-module-addons-contrib": "npm:^1.1.23"
-    "@backstage/plugin-techdocs-react": "npm:^1.2.16"
     "@backstage/plugin-user-settings": "npm:^0.8.21"
     "@material-ui/core": "npm:^4.12.4"
     "@material-ui/icons": "npm:^4.11.3"
@@ -26710,13 +26681,6 @@ __metadata:
   dependencies:
     split2: "npm:^4.1.0"
   checksum: 10c0/5ea6c9b2de04c33abb08d33a2dded303c4a3c7162a9264519cbe85c0a9857d712463140ba42fad0c7cd4b21f644dd870b45bb2e02fcbe505b4de0744fd802c1d
-  languageName: node
-  linkType: hard
-
-"photoswipe@npm:^5.3.7":
-  version: 5.4.4
-  resolution: "photoswipe@npm:5.4.4"
-  checksum: 10c0/9a62a8ee4b87564f3d2067edfd7f168d07973e1e37b21cd4f548363b441d8192991a88d272a0f299de0e7c773e6c74367ebcf895f0e60ca919d52e1d2f3b0355
   languageName: node
   linkType: hard
 

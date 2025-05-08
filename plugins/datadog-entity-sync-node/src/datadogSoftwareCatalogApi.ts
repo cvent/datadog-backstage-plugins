@@ -11,6 +11,7 @@ export type DatadogEntityDefinition = v2.EntityV3;
 export const datadogEntityRef = createServiceRef<v2.SoftwareCatalogApi>({
   id: 'datadog.v2.SoftwareCatalogApi',
   scope: 'plugin',
+  // eslint-disable-next-line @typescript-eslint/require-await
   defaultFactory: async service =>
     createServiceFactory({
       service,

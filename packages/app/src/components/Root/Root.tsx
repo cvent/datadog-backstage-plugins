@@ -59,7 +59,7 @@ function SidebarLogo() {
   );
 }
 
-export function Root({ children }: PropsWithChildren<{}>) {
+export function Root({ children }: PropsWithChildren) {
   return (
     <SidebarPage>
       <Sidebar>

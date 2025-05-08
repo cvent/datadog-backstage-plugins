@@ -6,6 +6,8 @@ describe('App', () => {
   it('should render', async () => {
     process.env = {
       NODE_ENV: 'test',
+      // https://github.com/backstage/backstage/blob/6e362e6fa7549469d8d92fe5638fb53b54d23be1/packages/app/src/App.test.tsx#L24-L41
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       APP_CONFIG: [
         {
           data: {
@@ -17,6 +19,8 @@ describe('App', () => {
           },
           context: 'test',
         },
+        // https://github.com/backstage/backstage/blob/6e362e6fa7549469d8d92fe5638fb53b54d23be1/packages/app/src/App.test.tsx#L24-L41
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any,
     };
 

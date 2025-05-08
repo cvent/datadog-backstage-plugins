@@ -16,13 +16,13 @@ export class ProgressLogger {
 
   public start(message: string) {
     this.restartTimer();
-    return this.log.info(message);
+    this.log.info(message);
   }
 
   public get log() {
     return this.logger.child({
-      stepTime: `${this.elapsedSinceLast}ms`,
-      totalTime: `${this.elapsedSinceStart}ms`,
+      stepTime: `${String(this.elapsedSinceLast)}ms`,
+      totalTime: `${String(this.elapsedSinceStart)}ms`,
     });
   }
 

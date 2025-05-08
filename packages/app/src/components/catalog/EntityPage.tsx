@@ -50,16 +50,8 @@ import {
   EntityOwnershipCard,
 } from '@backstage/plugin-org';
 import { EntityTechdocsContent } from '@backstage/plugin-techdocs';
-import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
-import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 
-const techdocsContent = (
-  <EntityTechdocsContent>
-    <TechDocsAddons>
-      <ReportIssue />
-    </TechDocsAddons>
-  </EntityTechdocsContent>
-);
+const techdocsContent = <EntityTechdocsContent />;
 
 const cicdContent = (
   // This is an example of how you can implement your company's logic in entity page.

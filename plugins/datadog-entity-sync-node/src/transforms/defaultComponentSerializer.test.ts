@@ -1,5 +1,7 @@
 import { cloneDeep } from 'lodash';
 
+import type { EntityV3Service } from '@datadog/datadog-api-client/dist/packages/datadog-api-client-v2';
+
 import type { Entity } from '@backstage/catalog-model/index';
 
 import type { ExtraSerializationInfo } from './defaultComponentSerializer';
@@ -47,11 +49,14 @@ describe('defaultComponentSerializer', () => {
         metadata: expect.objectContaining({
           name: 'mocked-service',
           owner: 'mocked-team',
-          tags: expect.arrayContaining(['tag1:value1', 'tag2:value2']),
-        }),
+          tags: expect.arrayContaining([
+            'tag1:value1',
+            'tag2:value2',
+          ]) as string[],
+        }) as EntityV3Service['metadata'],
         spec: expect.objectContaining({
           lifecycle: 'production',
-        }),
+        }) as EntityV3Service['spec'],
       }),
     );
   });
@@ -72,7 +77,7 @@ describe('defaultComponentSerializer', () => {
     const serviceDefinition = defaultComponentSerializer(mockedEntity);
 
     expect(serviceDefinition).toBeDefined();
-    expect(serviceDefinition.metadata?.name).toBe('mocked-service-override');
+    expect(serviceDefinition.metadata.name).toBe('mocked-service-override');
   });
 
   it('should add backstage labels as additional tags', () => {
@@ -80,7 +85,7 @@ describe('defaultComponentSerializer', () => {
 
     const serviceDefinition = defaultComponentSerializer(mockedEntity);
 
-    const tags = serviceDefinition.metadata?.tags ?? [];
+    const tags = serviceDefinition.metadata.tags ?? [];
 
     expect(serviceDefinition).toBeDefined();
     expect(tags).toEqual(
@@ -104,7 +109,7 @@ describe('defaultComponentSerializer', () => {
       defaultExtraInfo,
     );
 
-    const tags = serviceDefinition.metadata?.tags ?? [];
+    const tags = serviceDefinition.metadata.tags ?? [];
 
     expect(serviceDefinition).toBeDefined();
     expect(tags).toContain('system:mocked-system');
@@ -116,7 +121,7 @@ describe('defaultComponentSerializer', () => {
     const serviceDefinition = defaultComponentSerializer(mockedEntity);
 
     expect(serviceDefinition).toBeDefined();
-    expect(serviceDefinition.metadata?.description).toBe('mocked-description');
+    expect(serviceDefinition.metadata.description).toBe('mocked-description');
   });
 
   it('should include links that are supported types', () => {
@@ -133,7 +138,7 @@ describe('defaultComponentSerializer', () => {
       defaultExtraInfo,
     );
 
-    const links = serviceDefinition.metadata?.links ?? [];
+    const links = serviceDefinition.metadata.links ?? [];
 
     expect(serviceDefinition).toBeDefined();
     expect(links).toEqual(
@@ -153,7 +158,7 @@ describe('defaultComponentSerializer', () => {
       defaultExtraInfo,
     );
 
-    const links = serviceDefinition.metadata?.links ?? [];
+    const links = serviceDefinition.metadata.links ?? [];
 
     expect(serviceDefinition).toBeDefined();
     expect(links).toEqual(
@@ -178,7 +183,7 @@ describe('defaultComponentSerializer', () => {
       defaultExtraInfo,
     );
 
-    const links = serviceDefinition.metadata?.links ?? [];
+    const links = serviceDefinition.metadata.links ?? [];
 
     expect(serviceDefinition).toBeDefined();
     expect(links).toEqual(
@@ -210,9 +215,11 @@ describe('defaultComponentSerializer', () => {
         codeLocations: expect.arrayContaining([
           {
             repositoryURL: 'https://github.com/organization/repository-name',
-            paths: expect.arrayContaining(['packages/package-name/**']),
+            paths: expect.arrayContaining([
+              'packages/package-name/**',
+            ]) as string[],
           },
-        ]),
+        ]) as EntityV3Service['datadog'],
       }),
     );
   });

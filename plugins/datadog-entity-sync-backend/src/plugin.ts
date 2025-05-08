@@ -22,10 +22,7 @@ import { createRouter } from './router';
 export const datadogServicesPlugin = createBackendPlugin({
   pluginId: 'datadog-entity-sync',
   register(env) {
-    const serializers = new Map<
-      string,
-      DatadogServiceFromEntitySerializer<any>
-    >();
+    const serializers = new Map<string, DatadogServiceFromEntitySerializer>();
     env.registerExtensionPoint(datadogEntitySyncExtensionPoint, {
       defineSerializer(serializer) {
         serializers.set(serializer.syncId, serializer);
@@ -40,6 +37,7 @@ export const datadogServicesPlugin = createBackendPlugin({
         datadog: datadogEntityRef,
         events: eventsServiceRef,
       },
+      // eslint-disable-next-line @typescript-eslint/require-await
       async init({ logger, httpRouter, ...deps }) {
         const datadogSyncs = new Map(
           serializers.entries().map(([id, serializer]) => [
@@ -52,7 +50,7 @@ export const datadogServicesPlugin = createBackendPlugin({
         );
 
         httpRouter.use(
-          await createRouter({
+          createRouter({
             datadogSyncs,
           }),
         );
