@@ -18,7 +18,7 @@ export async function createRouter({
   const router = Router();
   router.use(express.json());
 
-  router.post('/serialize/:category', async ({ body, params }, response) => {
+  router.get('/serialize/:category', async ({ body, params }, response) => {
     const datadogSync = datadogSyncs.get(params.category);
     assert(
       datadogSync,

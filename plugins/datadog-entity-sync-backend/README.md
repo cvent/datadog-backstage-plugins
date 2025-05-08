@@ -217,7 +217,7 @@ There is also a "serialize" endpoint that can be used to see what an entity will
 
 ```bash
 curl --request GET \
-  --url 'https://backstage.myhost.net/api/datadog-services/datadog-service-from-component?entityFilter=spec.type=application,relations.ownedBy=my-team'
+  --url 'https://backstage.myhost.net/api/datadog-entity-sync/datadog-service-from-component?entityFilter=spec.type=application,relations.ownedBy=my-team'
 ```
 
 ## Development
