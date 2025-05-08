@@ -30,7 +30,7 @@
     "@backstage/plugin-permission-backend": "^0.6.0",
     "@backstage/plugin-permission-backend-module-allow-all-policy": "^0.2.7",
     "@backstage/plugin-proxy-backend": "^0.6.1",
-    "@backstage/plugin-scaffolder-backend": "^1.32.0",
+    "@backstage/plugin-scaffolder-backend": "^1.32.1",
     "@backstage/plugin-scaffolder-backend-module-github": "^0.7.0",
     "@backstage/plugin-search-backend": "^2.0.1",
     "@backstage/plugin-search-backend-module-catalog": "^0.3.3",
@@ -40,7 +40,7 @@
     "@cvent/backstage-plugin-datadog-entity-sync-backend": "workspace:^",
     "@cvent/backstage-plugin-datadog-entity-sync-node": "workspace:^",
     "app": "link:../app",
-    "better-sqlite3": "^11.9.1",
+    "better-sqlite3": "^11.10.0",
     "node-gyp": "^11.2.0"
   },
   "devDependencies": {
