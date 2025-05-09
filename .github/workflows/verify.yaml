@@ -13,7 +13,6 @@ concurrency:
 
 jobs:
   verify:
-    if: ${{ always() && !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - name: checkout-code
