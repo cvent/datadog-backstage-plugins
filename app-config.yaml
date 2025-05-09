@@ -101,6 +101,7 @@ datadog:
   integration:
     apiKey: ${DD_API_KEY}
     appKey: ${DD_APP_KEY}
+    site: datadoghq.com
   sync:
     datadog-service-from-component-with-teams: # this name has to mention the topic part name above and in the extension.
       entityFilter:
