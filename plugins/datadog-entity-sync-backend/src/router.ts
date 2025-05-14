@@ -60,9 +60,16 @@ export function parseEntityFilterString(
     .map(segment => segment.trim())
     .filter(Boolean)
     .reduce((result, keyValuePair) => {
-      const [property, value] = keyValuePair.split('=').map(part => part.trim());
+      const [property, value] = keyValuePair
+        .split('=')
+        .map(part => part.trim());
 
-      assert(property, new InputError(`Invalid filter format: '${keyValuePair}'. Expected format is 'key=value'`));
+      assert(
+        property,
+        new InputError(
+          `Invalid filter format: '${keyValuePair}'. Expected format is 'key=value'`,
+        ),
+      );
 
       result[property] = value ?? '';
       return result;
