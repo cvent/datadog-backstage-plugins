@@ -18,7 +18,7 @@ jobs:
       - name: checkout-code
         uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
       - name: install-build-tools
-        uses: jdx/mise-action@d20b46e041ee9e28e7b67d713f4df93a72358b54
+        uses: jdx/mise-action@c94f0bf9e520b150e34c017db785461f7e71c5fb
       - name: install-dependencies
         run: yarn install
       - name: verify-project
