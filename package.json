@@ -46,7 +46,7 @@
   },
   "resolutions": {
     "jsonpath-plus": ">=10",
-    "koa": ">=2",
+    "koa": ">=3.0.0",
     "tough-cookie": ">=4",
     "@types/react": "^18",
     "@types/react-dom": "^18"
