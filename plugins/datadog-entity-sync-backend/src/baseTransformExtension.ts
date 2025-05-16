@@ -21,6 +21,7 @@ export const datadogServiceFromComponentSerializer = createBackendModule({
         scheduler: coreServices.scheduler,
         datadogSync: datadogEntitySyncExtensionPoint,
       },
+      // eslint-disable-next-line @typescript-eslint/require-await
       async init({ datadogSync, config, scheduler }) {
         const { entityFilter, rateLimit, schedule, enabled } =
           config.get<DatadogEntitySyncConfig>(`datadog.sync.${SYNC_ID}`);

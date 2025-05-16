@@ -40,7 +40,7 @@
     "@backstage/backend-test-utils": "^1.4.0",
     "@backstage/cli": "^0.32.0",
     "@types/git-url-parse": "^16.0.2",
-    "@types/lodash": "^4",
+    "@types/lodash": "^4.17.16",
     "lodash": "^4.17.21"
   },
   "files": [

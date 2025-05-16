@@ -10,14 +10,15 @@ import type {
   SingleEntityFilterQuery,
 } from '@cvent/backstage-plugin-datadog-entity-sync-node';
 
-export async function createRouter({
+export function createRouter({
   datadogSyncs,
 }: {
   datadogSyncs: Map<string, DatadogServiceFromEntitySync<unknown>>;
-}): Promise<express.Router> {
+}) {
   const router = Router();
   router.use(express.json());
 
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   router.get('/serialize/:category', async ({ params, query }, response) => {
     const datadogSync = datadogSyncs.get(params.category);
     const { entityFilter = '' } = query;
@@ -35,7 +36,9 @@ export async function createRouter({
     // Extract the filter parameter and parse it into a structured query object
     const parsedEntityFilter = parseEntityFilterString(entityFilter);
 
-    response.status(200).json(await datadogSync.sync(parsedEntityFilter, true));
+    return void response
+      .status(200)
+      .json(await datadogSync.sync(parsedEntityFilter, true));
   });
 
   return router;
@@ -52,13 +55,11 @@ export async function createRouter({
  * @param filterString - The string to parse in format 'key1=value1,key2=value2'
  * @returns A SingleEntityFilterQuery object with key-value pairs
  */
-export function parseEntityFilterString(
-  searchString = '',
-): SingleEntityFilterQuery {
+export function parseEntityFilterString(searchString = '') {
   return searchString
     .split(',')
     .filter(Boolean)
-    .reduce((result, keyValuePair) => {
+    .reduce<SingleEntityFilterQuery>((result, keyValuePair) => {
       const [property, value] = keyValuePair
         .split('=')
         .map(part => part.trim());
@@ -70,7 +71,7 @@ export function parseEntityFilterString(
         ),
       );
 
-      result[property] = value ?? '';
+      result[property] = value;
       return result;
-    }, {} as SingleEntityFilterQuery);
+    }, {});
 }

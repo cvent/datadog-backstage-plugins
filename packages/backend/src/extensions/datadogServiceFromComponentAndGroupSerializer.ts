@@ -9,17 +9,14 @@ import type {
   DatadogEntityDefinition,
   ExtraSerializationInfo,
 } from '@cvent/backstage-plugin-datadog-entity-sync-node';
-import {
-  defaultComponentSerializer,
-  valueGuard,
-} from '@cvent/backstage-plugin-datadog-entity-sync-node';
+import { defaultComponentSerializer } from '@cvent/backstage-plugin-datadog-entity-sync-node';
 
 interface GroupWithContacts extends GroupEntity {
   spec: GroupEntity['spec'] & {
-    contacts?: Array<{
+    contacts?: {
       type: 'slack-channel' | 'slack-handle';
       value: string;
-    }>;
+    }[];
   };
 }
 
@@ -30,27 +27,24 @@ export function datadogServiceFromComponentAndGroupSerializer(
     slackBaseUrl?: string;
   } & ExtraSerializationInfo,
 ): DatadogEntityDefinition {
+  const { slackBaseUrl } = extraInfo ?? {};
   const defaultSerialization = defaultComponentSerializer(entity, extraInfo);
 
-  return {
-    ...defaultComponentSerializer(entity, extraInfo),
-    metadata: {
-      ...defaultSerialization.metadata,
-      ...valueGuard(team?.metadata.title ?? team?.metadata.name, teamName => ({
-        owner: teamName,
-      })),
-      ...valueGuard(
-        isGroupWithContacts(team) && getSlackChannels(team),
-        slackChannels => ({
-          contacts: slackChannels.map(slackChannel => ({
-            type: 'slack',
-            name: `#${slackChannel}`,
-            contact: `${extraInfo?.slackBaseUrl}/archives/${slackChannel}`,
-          })),
-        }),
-      ),
-    },
-  };
+  if (team?.metadata.name) {
+    defaultSerialization.metadata.owner = team.metadata.name;
+  }
+
+  if (slackBaseUrl && isGroupWithContacts(team)) {
+    defaultSerialization.metadata.contacts = getSlackChannels(team).map(
+      slackChannel => ({
+        type: 'slack',
+        name: `#${slackChannel}`,
+        contact: `${slackBaseUrl}/archives/${slackChannel}`,
+      }),
+    );
+  }
+
+  return defaultSerialization;
 }
 
 function getSlackChannels({ spec: { contacts = [] } }: GroupWithContacts) {

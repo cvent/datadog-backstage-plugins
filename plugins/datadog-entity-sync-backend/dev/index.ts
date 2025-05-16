@@ -29,4 +29,4 @@ backend.add(
 backend.add(import('../src'));
 backend.add(datadogServiceFromComponentSerializer);
 
-backend.start();
+void backend.start();

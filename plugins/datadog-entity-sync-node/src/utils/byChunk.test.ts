@@ -14,7 +14,7 @@ describe('Utility Functions', () => {
     });
 
     test('should process an array in chunks and at an interval', async () => {
-      async function* process(items: Array<{ id: number }>) {
+      async function* process(items: { id: number }[]) {
         await promiseDelay({ milliseconds: 1 });
 
         for (const item of items) {
@@ -30,7 +30,7 @@ describe('Utility Functions', () => {
       const PROCESSES_WAITS = CHUNKS_COUNT;
       const TOTAL_WAITS = RATE_LIMIT_WAITS + PROCESSES_WAITS;
 
-      const exampleItems = [...Array(AMOUNT)].map((_, index) => ({
+      const exampleItems = [...Array<unknown>(AMOUNT)].map((_, index) => ({
         id: index + 1,
       }));
 

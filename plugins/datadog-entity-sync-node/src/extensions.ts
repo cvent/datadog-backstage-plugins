@@ -19,13 +19,14 @@ export interface SyncConfig {
 
 export type AllSyncConfigs = Record<string, SyncConfig>;
 
-export type DatadogServiceFromEntitySerializer<Preload> = Omit<
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type DatadogServiceFromEntitySerializer<Preload = any> = Omit<
   DatadogServiceFromEntitySyncOptions<Preload>,
   'logger'
 >;
 
 interface DatadogEntitySyncExtensionPoint {
-  defineSerializer<Preload>(
+  defineSerializer<Preload = unknown>(
     serializer: DatadogServiceFromEntitySerializer<Preload>,
   ): void;
 }

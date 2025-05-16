@@ -136,10 +136,10 @@ function* getDatadogStyleLinks(
 export function defaultComponentSerializer(
   entity: Entity | ComponentEntity,
   extraInfo?: ExtraSerializationInfo,
-): EntityV3Service {
+) {
   ensureComponent(entity);
 
-  const { metadata, spec } = entity as ComponentEntity;
+  const { metadata, spec } = entity;
   const repoContext = resolveRepositoryInfo(entity);
   const entityOwnerRef = getEntityRelationRefs(entity, RELATION_OWNED_BY).at(0);
 
@@ -180,5 +180,5 @@ export function defaultComponentSerializer(
         ],
       },
     })),
-  };
+  } as EntityV3Service;
 }

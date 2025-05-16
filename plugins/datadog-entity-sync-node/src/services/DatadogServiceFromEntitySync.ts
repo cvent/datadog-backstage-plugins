@@ -30,12 +30,12 @@ interface Clients {
 }
 
 export type SingleEntityFilterQuery<FIlter = EntityFilterQuery> =
-  FIlter extends Array<infer SingleFilter> ? SingleFilter : FIlter;
+  FIlter extends (infer SingleFilter)[] ? SingleFilter : FIlter;
 
 export interface DatadogServiceFromEntitySyncOptions<Preload = unknown>
   extends BaseScheduledSyncOptions,
     Omit<SyncConfig, 'schedule'> {
-  serialize?: (entity: Entity, preload?: Preload) => DatadogEntityDefinition;
+  serialize?: (entity: Entity, preload: Preload) => DatadogEntityDefinition;
   preload?: (clients: Clients, entities: Entity[]) => Promise<Preload>;
 }
 
@@ -55,6 +55,11 @@ export class DatadogServiceFromEntitySync<
     interval: { hours: 1 },
   };
 
+  protected preload?: (
+    clients: Clients,
+    entities: Entity[],
+  ) => Promise<PreloadedData>;
+
   constructor(
     clients: Clients,
     options: DatadogServiceFromEntitySyncOptions<PreloadedData>,
@@ -71,17 +76,18 @@ export class DatadogServiceFromEntitySync<
     this.#clients = clients;
     this.#enabled = options.enabled;
     this.#topicId = `datadog-entity-sync.${this.syncId}`;
-    this.#clients.events.subscribe({
+    void this.#clients.events.subscribe({
       id: this.syncId,
       topics: [this.#topicId],
       onEvent: this.eventSync.bind(this),
     });
   }
 
-  async scheduledSync() {
-    return void (await this.sync());
+  scheduledSync() {
+    void this.sync();
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async eventSync(
     { eventPayload }: EventParams = {
       topic: this.#topicId,
@@ -89,10 +95,10 @@ export class DatadogServiceFromEntitySync<
     },
   ) {
     if (validateEventParams(eventPayload)) {
-      return void this.sync(eventPayload.entityFilter, eventPayload.dryRun);
+      void this.sync(eventPayload.entityFilter, eventPayload.dryRun);
     }
 
-    return void this.logger.warn(`Then event was is invalid.`);
+    this.logger.warn(`Then event was is invalid.`);
   }
 
   async sync(filter: SingleEntityFilterQuery = {}, dryRun?: boolean) {
@@ -108,9 +114,11 @@ export class DatadogServiceFromEntitySync<
       { credentials: await this.#clients.auth.getOwnServiceCredentials() },
     );
 
-    const preload = await this.preload(this.#clients, entities);
+    const preload = await this.preload?.(this.#clients, entities);
 
-    this.tracker.log.info(`Syncing ${entities.length} entities to datadog.`);
+    this.tracker.log.info(
+      `Syncing ${String(entities.length)} entities to datadog.`,
+    );
 
     const syncedServices = await byChunkAsync(
       entities,
@@ -119,7 +127,7 @@ export class DatadogServiceFromEntitySync<
     );
 
     this.tracker.log.info(
-      `Finished syncing ${syncedServices.length} services to datadog.`,
+      `Finished syncing ${String(syncedServices.length)} services to datadog.`,
     );
     return syncedServices;
   }
@@ -160,13 +168,6 @@ export class DatadogServiceFromEntitySync<
           );
       }
     }
-  }
-
-  protected async preload(
-    _clients: Clients,
-    _entities: Entity[],
-  ): Promise<PreloadedData | undefined> {
-    return void this.logger.debug('There was no preload function defined');
   }
 
   protected serialize(

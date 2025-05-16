@@ -10,12 +10,12 @@ module.exports = {
     {
       files: ['**/*.ts', '**/*.tsx'],
       extends: [
-        // 'plugin:@typescript-eslint/recommended',
-        // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
-        // 'plugin:@typescript-eslint/strict',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'plugin:@typescript-eslint/strict-type-checked',
+        'plugin:@typescript-eslint/stylistic-type-checked',
       ],
       parserOptions: {
-        project: './*.tsconfig.json',
+        project: './tsconfig.json',
         tsconfigRootDir: __dirname,
       },
     },

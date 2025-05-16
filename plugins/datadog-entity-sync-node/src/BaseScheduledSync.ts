@@ -30,17 +30,17 @@ export abstract class BaseScheduledSync {
     });
 
     this.tracker = new ProgressLogger(this.logger);
-    this.schedule();
+    void this.schedule();
   }
 
   protected getSyncName() {
     return this.syncId;
   }
 
-  private schedule() {
+  private async schedule() {
     try {
       this.logger.info(`Scheduling sync of ${this.syncId}.`);
-      this.taskRunner.run({
+      await this.taskRunner.run({
         id: this.syncId,
         fn: this.scheduledSyncTrigger.bind(this),
         signal: this.abortController.signal,

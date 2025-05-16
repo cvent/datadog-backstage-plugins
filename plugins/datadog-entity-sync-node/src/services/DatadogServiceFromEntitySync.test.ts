@@ -36,7 +36,7 @@ const MOCKED_ENTITIES = [
       },
     ],
   },
-].flatMap(entity => Array(7).fill(entity));
+].flatMap(entity => Array<typeof entity>(7).fill(entity));
 
 const DEFAULT_RESPONSE = {
   apiVersion: 'v3',
@@ -142,7 +142,7 @@ describe('DatadogServiceFromEntitySync', () => {
       const mockedResponse = {
         ...DEFAULT_RESPONSE,
         metadata: { ...DEFAULT_RESPONSE.metadata, links: [] },
-      };
+      } as const;
 
       expect(syncedServices).toEqual(Array(7).fill(mockedResponse));
     });
