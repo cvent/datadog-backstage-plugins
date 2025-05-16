@@ -20,18 +20,22 @@ export async function createRouter({
 
   router.get('/serialize/:category', async ({ params, query }, response) => {
     const datadogSync = datadogSyncs.get(params.category);
+    const { entityFilter = '' } = query;
     assert(
       datadogSync,
       new NotFoundError(
         `These was no Datadog catalog sync for the sync category ${params.category}`,
       ),
     );
+    assert(
+      typeof entityFilter === 'string',
+      new InputError('The entityFilter query parameter must be a string'),
+    );
 
     // Extract the filter parameter and parse it into a structured query object
-    const filterParam = String(query.entityFilter || '').trim();
-    const entityFilter = parseEntityFilterString(filterParam);
+    const parsedEntityFilter = parseEntityFilterString(entityFilter);
 
-    response.status(200).json(await datadogSync.sync(entityFilter, true));
+    response.status(200).json(await datadogSync.sync(parsedEntityFilter, true));
   });
 
   return router;
@@ -49,15 +53,10 @@ export async function createRouter({
  * @returns A SingleEntityFilterQuery object with key-value pairs
  */
 export function parseEntityFilterString(
-  searchString: string,
+  searchString = '',
 ): SingleEntityFilterQuery {
-  if (!searchString) {
-    return {};
-  }
-
   return searchString
     .split(',')
-    .map(segment => segment.trim())
     .filter(Boolean)
     .reduce((result, keyValuePair) => {
       const [property, value] = keyValuePair

@@ -23,10 +23,20 @@ describe('parseEntityFilterString', () => {
         'metadata.name': '',
       });
     });
+
+    it('should trim out extra whitespace', () => {
+      const result = parseEntityFilterString(
+        '  metadata.name  = service-name  ,  kind  =  application  ',
+      );
+      expect(result).toEqual({
+        'metadata.name': 'service-name',
+        kind: 'application',
+      });
+    });
   });
 
   describe('with invalid input', () => {
-    ['=', '=,'].forEach(invalidInput => {
+    ['=', '=,', '=,,', ',=,==,'].forEach(invalidInput => {
       it(`should fail with invalid input of '${invalidInput}'`, () => {
         expect(() => parseEntityFilterString(invalidInput)).toThrow(Error);
       });
