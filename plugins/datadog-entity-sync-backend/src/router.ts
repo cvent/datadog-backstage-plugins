@@ -18,46 +18,59 @@ export async function createRouter({
   const router = Router();
   router.use(express.json());
 
-  router.post('/serialize/:category', async ({ body, params }, response) => {
+  router.get('/serialize/:category', async ({ params, query }, response) => {
     const datadogSync = datadogSyncs.get(params.category);
+    const { entityFilter = '' } = query;
     assert(
       datadogSync,
       new NotFoundError(
         `These was no Datadog catalog sync for the sync category ${params.category}`,
       ),
     );
+    assert(
+      typeof entityFilter === 'string',
+      new InputError('The entityFilter query parameter must be a string'),
+    );
 
-    const entityFilter = parseEntityFilterParams(body);
-    response.status(201).json(await datadogSync.sync(entityFilter, true));
+    // Extract the filter parameter and parse it into a structured query object
+    const parsedEntityFilter = parseEntityFilterString(entityFilter);
+
+    response.status(200).json(await datadogSync.sync(parsedEntityFilter, true));
   });
 
   return router;
 }
 
-function parseEntityFilterParams(body: unknown) {
-  assert(
-    validateRequestBodyFilter(body),
-    new InputError(
-      'The posted "entityFilter" property was not properly formatted.',
-    ),
-  );
+/**
+ * Takes in a filter string and parses it into a SingleEntityFilterQuery object.
+ *
+ * This filter string is a subset of an entity filter query in the format of `<key>=<value>,<key>=<value>`.
+ *
+ * @example  Below is an example of a filter string:
+ * 'metadata.name=service-name,kind=application' would result in { 'metadata.name': 'service-name', 'kind': 'application' }
+ *
+ * @param filterString - The string to parse in format 'key1=value1,key2=value2'
+ * @returns A SingleEntityFilterQuery object with key-value pairs
+ */
+export function parseEntityFilterString(
+  searchString = '',
+): SingleEntityFilterQuery {
+  return searchString
+    .split(',')
+    .filter(Boolean)
+    .reduce((result, keyValuePair) => {
+      const [property, value] = keyValuePair
+        .split('=')
+        .map(part => part.trim());
 
-  return body.entityFilter;
-}
+      assert(
+        property,
+        new InputError(
+          `Invalid filter format: '${keyValuePair}'. Expected format is 'key=value'`,
+        ),
+      );
 
-function validateRequestBodyFilter(
-  body: unknown,
-): body is { entityFilter: SingleEntityFilterQuery } {
-  if (isObject(body) && 'entityFilter' in body) {
-    const { entityFilter } = body;
-    if (isObject(entityFilter)) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-function isObject(object: unknown) {
-  return typeof object === 'object' && object !== null;
+      result[property] = value ?? '';
+      return result;
+    }, {} as SingleEntityFilterQuery);
 }

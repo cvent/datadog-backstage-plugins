@@ -1,4 +1,4 @@
-# datadog-entity-sync-backend
+# Datadog Entity Sync Backend
 
 This plugin backend is used to sync a Backstage catalog with a Datadog service catalog.
 
@@ -21,7 +21,7 @@ backend.add(import('@cvent/backstage-plugin-datadog-entity-sync-backend'));
 
 ## Configuration
 
-Here is an example configuration that you can leverage.
+Here is an example configuration that you can leverage:
 
 ```yaml
 datadog:
@@ -32,31 +32,35 @@ datadog:
 events:
   http:
     topics:
-      - datadog-entity-sync.datadog-service-from-component # this name has to mention the sync name below and in the extension.
+      # This name must match the sync name defined below and in the extension
+      - datadog-entity-sync.datadog-service-from-component
 datadog:
   sync:
-    datadog-service-from-component: # this name has to mention the topic part name above and in the extension.
+    # This name must match the topic part name above and in the extension
+    datadog-service-from-component:
       entityFilter:
         kind: component
-        metadata.annotations.datadoghq.com/service-name: CATALOG_FILTER_EXISTS # adjust to your identifier in datadog
+        # Adjust to your identifier in Datadog
+        metadata.annotations.datadoghq.com/service-name: CATALOG_FILTER_EXISTS
       rateLimit:
         count: 60
         interval:
           minutes: 1
       schedule:
         frequency:
-          cron: '1 1 * * *' # set to your schedule
+          cron: '1 1 * * *' # Set to your preferred schedule
         timeout:
           minutes: 10
-      enabled: false # change to true in production
+      enabled: false # Change to true in production
 ```
 
 ## Customization
 
-In order to customize what entities are synced to datadog, and how the entities are serialized before they are synced, there is a "extension point" which can be used
-to customize these options. Here is what the default options looks like.
+In order to customize what entities are synced to Datadog and how the entities are serialized before syncing, there is an "extension point" which can be used to customize these options.
 
-This is the base extension point that comes with included in the `@cvent/backstage-plugin-datadog-entity-sync-backend` package. You can add it to your backend as such.
+### Basic Configuration
+
+This is the base extension point included in the `@cvent/backstage-plugin-datadog-entity-sync-backend` package. You can add it to your backend as follows:
 
 ```typescript
 import { defaultComponentSerializer } from '@cvent/backstage-plugin-datadog-entity-sync-backend';
@@ -66,13 +70,19 @@ backend.add(import('@cvent/backstage-plugin-datadog-entity-sync-backend'));
 backend.add(defaultComponentSerializer);
 ```
 
-And here is the default serializer.
+### Default Serializer
+
+Here is the implementation of the default serializer:
 
 ```typescript
-import { coreServices, createBackendModule, SchedulerServiceTaskScheduleDefinition } from '@backstage/backend-plugin-api';
+import {
+  coreServices,
+  createBackendModule,
+  SchedulerServiceTaskScheduleDefinition,
+} from '@backstage/backend-plugin-api';
 import { EntityFilterQuery } from '@backstage/catalog-client';
-import { defaultComponentSerializer } from '@cvent/backstage-backstage-plugin-datadog-entity-sync-node';
-import { datadogServicesExtensionPoint } from '@cvent/backstage-backstage-plugin-datadog-entity-sync-node';
+import { defaultComponentSerializer } from '@cvent/backstage-plugin-datadog-entity-sync-node';
+import { datadogEntitySyncExtensionPoint } from '@cvent/backstage-plugin-datadog-entity-sync-node';
 
 const SYNC_ID = 'datadog-service-from-component';
 
@@ -106,9 +116,10 @@ export const datadogServiceFromComponentAndGroupSync = createBackendModule({
 });
 ```
 
-The "serializeEntity" will take an entity (and an optional preloaded dataset) and return an `EntityV3`.
-There is also an option where you can specify a set of data to be "preloaded" when a sync starts that will be passed to the serializeEntity as such.
-Below is an example where we want to get some additional data from the owning teams to add to the entity.
+The `serializeEntity` function takes an entity (and an optional preloaded dataset) and returns an `EntityV3`.
+You can specify a set of data to be "preloaded" when a sync starts that will be passed to the `serializeEntity` function.
+
+Below is an example where we retrieve additional data from the owning teams to add to the entity:
 
 ```typescript
 import {
@@ -199,7 +210,13 @@ export const datadogServiceFromComponentAndGroupSync = createBackendModule({
 });
 ```
 
-To manually trigger a sync, you can issue an event with the topic of "sync-catalog-to-datadog" with an entity filter. If you register the event as a webhook endpoint, you can trigger it via an http call such as.
+## Triggering Sync Operations
+
+### Manual Sync Trigger
+
+To manually trigger a sync, you can issue an event with the topic of `datadog-entity-sync.<SYNC_ID>` with an entity filter. If you register the event as a webhook endpoint, you can trigger it via an HTTP call.
+
+> **NOTE**: In all examples below, the `SYNC_ID` is `datadog-service-from-component`.
 
 ```bash
 curl --request POST \
@@ -211,19 +228,35 @@ curl --request POST \
 }'
 ```
 
-The entity filter is your standard entity filter.
+The entity filter uses the standard Backstage entity filter format.
 
-There is also a "serialize" endpoint that can be used to see what an entity will look like after it is serialized before it goes to datadog. This is called with the passing a filter in the url like you would for an entity query.
+### Preview Serialized Entities
+
+The plugin provides a "serialize" endpoint that lets you preview how entities will appear in Datadog before they're actually synced. This is useful for testing and verification purposes. The endpoint accepts an optional `entityFilter` query parameter to filter the scope of entities serialized.  It uses the standard Backstage filter syntax.
 
 ```bash
+# Get all entities within the sync's configured scope
 curl --request GET \
-  --url 'https://backstage.myhost.net/api/datadog-services/datadog-service-from-component?entityFilter=spec.type=application,relations.ownedBy=my-team'
+  --url 'https://backstage.myhost.net/api/datadog-entity-sync/serialize/datadog-service-from-component'
+
+# Filter entities using Backstage entity filter syntax
+curl --request GET \
+  --url 'https://backstage.myhost.net/api/datadog-entity-sync/serialize/datadog-service-from-component?entityFilter=spec.type=application,relations.ownedBy=my-team'
 ```
 
 ## Development
 
-This plugin backend can be started in a standalone mode from directly in this
-package with `yarn start`. It is a limited setup that is most convenient when
-developing the plugin backend itself.
+This plugin backend can be started in standalone mode directly from this package with:
 
-If you want to run the entire project, including the frontend, run `yarn start` from the root directory.
+```bash
+yarn start
+```
+
+This provides a limited setup that is convenient when developing the plugin backend itself.
+
+If you want to run the entire project, including the frontend, run:
+
+```bash
+# From the root directory
+yarn start
+```

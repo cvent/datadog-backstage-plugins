@@ -32,5 +32,5 @@ interface DatadogEntitySyncExtensionPoint {
 
 export const datadogEntitySyncExtensionPoint =
   createExtensionPoint<DatadogEntitySyncExtensionPoint>({
-    id: 'datadog-services.define-serializer',
+    id: 'datadog-entity-sync.define-serializer',
   });
