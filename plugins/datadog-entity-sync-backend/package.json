@@ -33,7 +33,7 @@
     "@backstage/plugin-catalog-node": "^1.20.0",
     "@backstage/plugin-events-node": "^0.4.17",
     "@datadog/backstage-plugin-datadog-entity-sync-node": "workspace:^",
-    "express": "^4.22.1",
+    "express": "^5.2.1",
     "express-promise-router": "^4.1.1"
   },
   "devDependencies": {
