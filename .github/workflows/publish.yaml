@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: install-build-tools
         uses: jdx/mise-action@d20b46e041ee9e28e7b67d713f4df93a72358b54
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'
