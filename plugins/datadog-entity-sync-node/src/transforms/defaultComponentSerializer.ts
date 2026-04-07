@@ -21,7 +21,9 @@ function ensureComponent(
 ): asserts entity is ComponentEntity {
   if (!isComponentEntity(entity))
     throw new Error(
-      `Only Components are allowed to be synced, and ${stringifyEntityRef(entity)} is not a component.`,
+      `Only Components are allowed to be synced, and ${stringifyEntityRef(
+        entity,
+      )} is not a component.`,
     );
 }
 

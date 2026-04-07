@@ -1,15 +1,26 @@
 {
   "ignore": ["**/.eslintrc.js", "examples/**"],
   "ignoreDependencies": [
-    "app",
-    "better-sqlite3",
-    "jest-canvas-mock",
+    "@backstage/cli-defaults",
     "node-gyp"
   ],
   "workspaces": {
     "packages/*": {
       "entry": "src/{index,setupTests}.{ts,tsx}",
       "project": "**/*.{ts,tsx}"
+    },
+    "packages/app": {
+      "entry": "src/{index,setupTests}.{ts,tsx}",
+      "project": "**/*.{ts,tsx}",
+      "ignoreDependencies": [
+        "@backstage/plugin-*"
+      ]
+    },
+    "packages/backend": {
+      "project": "**/*.ts",
+      "ignoreDependencies": [
+        "app"
+      ]
     },
     "plugins/*": {
       "entry": ["{src,dev}/{index,setupTests}.{ts,tsx}"],

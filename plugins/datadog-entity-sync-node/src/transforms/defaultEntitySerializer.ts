@@ -39,7 +39,9 @@ function ensureEntity(
     )
   )
     throw new Error(
-      `Only Components, APIs, Systems, and Resources are allowed to be synced, and ${stringifyEntityRef(entity)} is not a component, api, system, or resource.`,
+      `Only Components, APIs, Systems, and Resources are allowed to be synced, and ${stringifyEntityRef(
+        entity,
+      )} is not a component, api, system, or resource.`,
     );
 }
 

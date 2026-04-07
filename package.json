@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "20 || 22"
+    "node": "22 || 24"
   },
   "scripts": {
+    "verify": "yarn clean && yarn spellcheck --no-progress && yarn lint:all && yarn config:check && yarn tsc && yarn deprecations && yarn test:all && yarn knip && yarn clean && echo '💙 - verified - 💙'",
+    "config:check": "backstage-cli config:check --strict",
+    "deprecations": "backstage-cli repo list-deprecations",
+    "spellcheck": "cspell --gitignore '**/*.{tsx,ts,yaml,md}'",
     "start": "backstage-cli repo start",
     "build:backend": "yarn workspace backend build",
     "build:all": "backstage-cli repo build --all",
@@ -19,38 +23,42 @@
     "fix": "backstage-cli repo fix",
     "lint": "backstage-cli repo lint --since origin/main",
     "lint:all": "backstage-cli repo lint",
-    "config:check": "backstage-cli config:check --strict",
     "prettier:check": "prettier --check .",
-    "deprecations": "backstage-cli repo list-deprecations",
-    "spellcheck": "cspell --gitignore '**/*.{tsx,ts,yaml,md}'",
-    "verify": "yarn clean && yarn spellcheck --no-progress && yarn lint:all && yarn config:check && yarn tsc && yarn deprecations && yarn test:all && yarn knip && yarn clean && echo '💙 - verified - 💙'",
     "new": "backstage-cli new"
   },
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "plugins/*"
-    ]
+  "backstage": {
+    "cli": {
+      "new": {
+        "globals": {
+          "license": "UNLICENSED"
+        }
+      }
+    }
   },
+  "workspaces": [
+    "packages/*",
+    "plugins/*"
+  ],
   "devDependencies": {
-    "@backstage/cli": "^0.34.5",
-    "@backstage/e2e-test-utils": "^0.1.1",
-    "@playwright/test": "^1.57.0",
-    "@types/node": "^24.10.4",
-    "cspell": "^9.4.0",
+    "@backstage/cli": "^0.36.0",
+    "@backstage/cli-defaults": "^0.1.0",
+    "@backstage/e2e-test-utils": "^0.1.2",
+    "@jest/environment-jsdom-abstract": "^30.3.0",
+    "@playwright/test": "^1.59.1",
+    "@types/jest": "^30.0.0",
+    "cspell": "^10.0.0",
     "eslint": "^8.57.1",
-    "eslint-plugin-prettier": "^5.5.4",
-    "jest-canvas-mock": "^2.5.2",
-    "knip": "^5.73.4",
-    "node-gyp": "^12.1.0",
-    "prettier": "^3.7.4",
-    "typescript": "~5.9.3"
+    "eslint-plugin-prettier": "^5.5.5",
+    "jest": "^30.3.0",
+    "jsdom": "^27.4.0",
+    "knip": "^6.3.0",
+    "node-gyp": "^12.2.0",
+    "prettier": "^2.8.8",
+    "typescript": "~6.0.2"
   },
   "resolutions": {
-    "isolated-vm": ">=6",
-    "jsonpath-plus": ">=10",
-    "koa": ">=2",
-    "tough-cookie": ">=4"
+    "@types/react": "^18",
+    "@types/react-dom": "^18"
   },
   "prettier": "@backstage/cli/config/prettier",
   "lint-staged": {
@@ -62,10 +70,5 @@
       "prettier --write"
     ]
   },
-  "jest": {
-    "setupFiles": [
-      "jest-canvas-mock"
-    ]
-  },
-  "packageManager": "yarn@4.10.3"
+  "packageManager": "yarn@4.13.0"
 }
