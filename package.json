@@ -46,12 +46,6 @@
     "prettier": "^3.7.4",
     "typescript": "~5.9.3"
   },
-  "resolutions": {
-    "isolated-vm": ">=6",
-    "jsonpath-plus": ">=10",
-    "koa": ">=2",
-    "tough-cookie": ">=4"
-  },
   "prettier": "@backstage/cli/config/prettier",
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
@@ -67,5 +61,8 @@
       "jest-canvas-mock"
     ]
   },
-  "packageManager": "yarn@4.10.3"
+  "packageManager": "yarn@4.10.3",
+  "resolutions": {
+    "isolated-vm": ">=6"
+  }
 }
