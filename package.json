@@ -44,13 +44,7 @@
     "knip": "^5.73.4",
     "node-gyp": "^12.1.0",
     "prettier": "^3.7.4",
-    "typescript": "~5.9.3"
-  },
-  "resolutions": {
-    "isolated-vm": ">=6",
-    "jsonpath-plus": ">=10",
-    "koa": ">=2",
-    "tough-cookie": ">=4"
+    "typescript": "~6.0.3"
   },
   "prettier": "@backstage/cli/config/prettier",
   "lint-staged": {
@@ -67,5 +61,8 @@
       "jest-canvas-mock"
     ]
   },
-  "packageManager": "yarn@4.10.3"
+  "packageManager": "yarn@4.10.3",
+  "resolutions": {
+    "isolated-vm": ">=6"
+  }
 }
