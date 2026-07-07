@@ -46,12 +46,6 @@
     "prettier": "^3.7.4",
     "typescript": "~5.9.3"
   },
-  "resolutions": {
-    "isolated-vm": ">=6",
-    "jsonpath-plus": ">=10",
-    "koa": ">=2",
-    "tough-cookie": ">=4"
-  },
   "prettier": "@backstage/cli/config/prettier",
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
@@ -67,5 +61,16 @@
       "jest-canvas-mock"
     ]
   },
-  "packageManager": "yarn@4.10.3"
+  "packageManager": "yarn@4.10.3",
+  "resolutions": {
+    "isolated-vm": ">=6",
+    "koa": ">=2.16.4",
+    "tough-cookie": ">=4",
+    "fast-xml-parser": "^5.9.3",
+    "tar": "^7.5.19",
+    "undici": "^7.28.0",
+    "dompurify": "^3.4.11",
+    "minimatch": "^7.4.9",
+    "flatted": "^3.4.2"
+  }
 }
